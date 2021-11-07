@@ -1,0 +1,2 @@
+io/jron/piece/PawnTest.java
+ io.jron.piece.PawnTest
