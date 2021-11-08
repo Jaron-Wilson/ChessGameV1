@@ -12,7 +12,6 @@ import java.util.List;
  * This class uses a builder patter to launch a swing UI to
  * test your AI.
  *
- * @see
  */
 public class SwingSupport {
 
@@ -24,21 +23,21 @@ public class SwingSupport {
         new SwingSupport().run();
     }
 
-    /**
-     * You can pass in your own board. This allows you to:
-     * <ol>
-     *     <li>Set up the state of the board</li>
-     *     <li>To configure the size of the board</li>
-     *     <li>To configure other settings suck as the goal</li>
-     * </ol>
-     *
-     * @param board
-     * @return this to keep the builder going
-     */
-    public SwingSupport setBoard(MutableBoard board) {
-        this.board = board;
-        return this;
-    }
+//    /**
+//     * You can pass in your own board. This allows you to:
+//     * <ol>
+//     *     <li>Set up the state of the board</li>
+//     *     <li>To configure the size of the board</li>
+//     *     <li>To configure other settings suck as the goal</li>
+//     * </ol>
+//     *
+//     * @param board
+//     * @return this to keep the builder going
+//     */
+//    public SwingSupport setBoard(MutableBoard board) {
+//        this.board = board;
+//        return this;
+//    }
 
 
     /**
@@ -95,22 +94,22 @@ public class SwingSupport {
                     int y = e.getY() / BoardPanel.PIECE_SIZE;
 
                     Coordanate selectedPiece = boardPanel.getSelectedPiece();
-                    if(selectedPiece != null){
+                    if (selectedPiece != null) {
                         System.out.println("MOVING A PIECE!");
 
                         Piece pieceToMove = board.getPiece(selectedPiece.getX(), selectedPiece.getY());
-                        if( pieceToMove != null && pieceToMove.getColor() == turn) {
+                        if (pieceToMove != null && pieceToMove.getColor() == turn) {
                             if (boardPanel.getCanMoveToList().contains(new Coordanate(x, y))) {
                                 board.setPiece(selectedPiece, null);
                                 board.setPiece(x, y, pieceToMove);
                                 turn = turn == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
                                 boardPanel.setCanMoveToList(null, null);
-                                new Thread(() -> boardPanel.repaint()).start();
+                                new Thread(boardPanel::repaint).start();
                                 return;
                             } else {
                                 System.out.println("MORON!");
                                 boardPanel.setCanMoveToList(null, null);
-                                new Thread(() -> boardPanel.repaint()).start();
+                                new Thread(boardPanel::repaint).start();
                                 return;
                             }
                         } else {
@@ -125,10 +124,10 @@ public class SwingSupport {
                         List<Coordanate> cordanateList = p.canMoveTo(board, c);
                         boardPanel.setCanMoveToList(c, cordanateList);
                     } else {
-                        boardPanel.setCanMoveToList(null,null);
+                        boardPanel.setCanMoveToList(null, null);
                     }
 
-                    new Thread(() -> boardPanel.repaint()).start();
+                    new Thread(boardPanel::repaint).start();
 
                 }
             });

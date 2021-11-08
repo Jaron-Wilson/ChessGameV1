@@ -21,7 +21,7 @@ public class King extends Piece {
             for (int dy = -1; dy <= 1; dy++) {
                 int x = current.getX() + dx;
                 int y = current.getY() + dy;
-                if(x>=0 && y >= 0 && x<8 && y<8) {
+                if (x >= 0 && y >= 0 && x < 8 && y < 8) {
                     addIfEmptyAndMoreThanThat(moves, board, x, y);
                 }
             }

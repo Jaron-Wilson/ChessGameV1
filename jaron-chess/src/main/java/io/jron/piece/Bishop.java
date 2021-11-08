@@ -17,27 +17,25 @@ public class Bishop extends Piece {
         List<Coordanate> moves = new ArrayList<>(14);
 
 
-        for (int x = current.getX()+1, y = current.getY() -1;x < 8 && y >= 0; x++, y--) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() + 1, y = current.getY() - 1; x < 8 && y >= 0; x++, y--) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
-        for (int x = current.getX()+1, y = current.getY() + 1;x < 8 && y < 8; x++, y++) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() + 1, y = current.getY() + 1; x < 8 && y < 8; x++, y++) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
-        for (int x = current.getX()-1, y = current.getY() + 1;x > 0 && y < 8; x--, y++) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() - 1, y = current.getY() + 1; x > 0 && y < 8; x--, y++) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
-        for (int x = current.getX()-1, y = current.getY() - 1;x > 0 && y > 0; x--, y--) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() - 1, y = current.getY() - 1; x > 0 && y > 0; x--, y--) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
-
-
 
 
 //        for (int i = 1, x = current.getX(), y = current.getY(); i <= 7; i++) {
@@ -59,9 +57,8 @@ public class Bishop extends Piece {
 //
 //        }
 
-    return moves;
+        return moves;
     }
-
 
 
 }

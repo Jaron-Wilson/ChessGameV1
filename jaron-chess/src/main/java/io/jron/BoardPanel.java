@@ -16,6 +16,7 @@ public class BoardPanel extends JPanel {
     private final Color[] COLORS = {Color.GRAY, Color.GRAY, Color.RED, Color.BLACK};
     protected Dimension defaultDimension;
     private List<Coordanate> CanMoveToList;
+    private Coordanate selectedPiece = null;
 
     public BoardPanel(Board board) {
         this.board = board;
@@ -55,9 +56,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    private Coordanate selectedPiece = null;
-
-    public void setCanMoveToList(Coordanate selectedPiece , List<Coordanate> canMoveToList) {
+    public void setCanMoveToList(Coordanate selectedPiece, List<Coordanate> canMoveToList) {
         this.selectedPiece = selectedPiece;
         CanMoveToList = canMoveToList;
     }
