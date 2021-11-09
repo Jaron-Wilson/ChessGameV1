@@ -44,47 +44,35 @@ public class SwingSupport {
      * Launches the JFrame that contains the io.jron.BoardPanel to display the game.
      */
     public void run() {
+        FenParser fen = new FenParser();
         if (board == null) {
             board = new MutableBoard();
             //Black
-
-            board.setPiece(0, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(1, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(2, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(3, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(4, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(5, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(6, 1, new Pawn(Piece.Color.BLACK));
-            board.setPiece(7, 1, new Pawn(Piece.Color.BLACK)); // Pawns
-
-            board.setPiece(0, 0, new Rook(Piece.Color.BLACK));
-            board.setPiece(1, 0, new Knight(Piece.Color.BLACK));
-            board.setPiece(2, 0, new Bishop(Piece.Color.BLACK));
-            board.setPiece(3, 0, new King(Piece.Color.BLACK));
-            board.setPiece(4, 0, new Queen(Piece.Color.BLACK));
-            board.setPiece(5, 0, new Bishop(Piece.Color.BLACK));
-            board.setPiece(6, 0, new Knight(Piece.Color.BLACK));
-            board.setPiece(7, 0, new Rook(Piece.Color.BLACK));
-
-            board.setPiece(0, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(1, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(2, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(3, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(4, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(5, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(6, 6, new Pawn(Piece.Color.WHITE));
-            board.setPiece(7, 6, new Pawn(Piece.Color.WHITE));
-
-            board.setPiece(0, 7, new Rook(Piece.Color.WHITE));
-            board.setPiece(1, 7, new Knight(Piece.Color.WHITE));
-            board.setPiece(2, 7, new Bishop(Piece.Color.WHITE));
-            board.setPiece(3, 7, new King(Piece.Color.WHITE));
-            board.setPiece(4, 7, new Queen(Piece.Color.WHITE));
-            board.setPiece(5, 7, new Bishop(Piece.Color.WHITE));
-            board.setPiece(6, 7, new Knight(Piece.Color.WHITE));
-            board.setPiece(7, 7, new Rook(Piece.Color.WHITE));
+            fen.parse(FenParser.STARTING_POSITION, board);
 
             BoardPanel boardPanel = new BoardPanel(board);
+
+
+
+            //board.addBoardChangedListener(coordinate -> SwingUtilities.invokeLater(() -> boardPanel.repaint()));
+
+            JPanel statusPanel = new JPanel(new BorderLayout());
+            final JTextField status = new JTextField(fen.format(board));
+            status.setEditable(false);
+            statusPanel.add(new JLabel("FEN: "), BorderLayout.WEST);
+            statusPanel.add(status, BorderLayout.CENTER);
+            JButton undo = new JButton("<");
+            //undo.addActionListener((ActionEvent e) -> SwingUtilities.invokeLater(() -> board.undo()));
+            statusPanel.add(undo, BorderLayout.EAST);
+
+            JFrame frame = new JFrame("Chess");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLayout(new BorderLayout());
+            GridBagConstraints c = new GridBagConstraints();
+            frame.add(boardPanel, BorderLayout.CENTER);
+            frame.add(statusPanel, BorderLayout.SOUTH);
+            frame.pack();
+
 
             //Register a listener to capture when a io.jron.piece is to be played.
             boardPanel.addMouseListener(new MouseAdapter() {
@@ -103,6 +91,7 @@ public class SwingSupport {
                                 board.setPiece(selectedPiece, null);
                                 board.setPiece(x, y, pieceToMove);
                                 turn = turn == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
+                                status.setText( new FenParser().format(board));
                                 boardPanel.setCanMoveToList(null, null);
                                 new Thread(boardPanel::repaint).start();
                                 return;
@@ -132,23 +121,6 @@ public class SwingSupport {
                 }
             });
 
-            //board.addBoardChangedListener(coordinate -> SwingUtilities.invokeLater(() -> boardPanel.repaint()));
-
-            JPanel statusPanel = new JPanel(new BorderLayout());
-            JTextField status = new JTextField("");
-            status.setEditable(false);
-            statusPanel.add(status, BorderLayout.CENTER);
-            JButton undo = new JButton("<");
-            //undo.addActionListener((ActionEvent e) -> SwingUtilities.invokeLater(() -> board.undo()));
-            statusPanel.add(undo, BorderLayout.EAST);
-
-            JFrame frame = new JFrame("Chess");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setLayout(new BorderLayout());
-            GridBagConstraints c = new GridBagConstraints();
-            frame.add(boardPanel, BorderLayout.CENTER);
-            frame.add(statusPanel, BorderLayout.SOUTH);
-            frame.pack();
             frame.setVisible(true);
         }
     }
