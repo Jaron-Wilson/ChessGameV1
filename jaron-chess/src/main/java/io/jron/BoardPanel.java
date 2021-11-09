@@ -43,7 +43,7 @@ public class BoardPanel extends JPanel {
 
                 if ((piece != null)) {
                     g.setColor(piece.getColor() == Piece.Color.BLACK ? Color.BLACK : Color.WHITE);
-                    g.drawString(piece.getClass().getSimpleName(), x * PIECE_SIZE + PIECE_SIZE / 2, y * PIECE_SIZE + PIECE_SIZE / 2);
+                    g.drawString(piece.toString(), x * PIECE_SIZE + PIECE_SIZE / 3, y * PIECE_SIZE + PIECE_SIZE / 2);
                 }
             }
         }

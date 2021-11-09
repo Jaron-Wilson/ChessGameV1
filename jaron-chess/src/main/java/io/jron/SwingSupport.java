@@ -51,9 +51,6 @@ public class SwingSupport {
             fen.parse(FenParser.STARTING_POSITION, board);
 
             BoardPanel boardPanel = new BoardPanel(board);
-
-
-
             //board.addBoardChangedListener(coordinate -> SwingUtilities.invokeLater(() -> boardPanel.repaint()));
 
             JPanel statusPanel = new JPanel(new BorderLayout());
@@ -89,7 +86,15 @@ public class SwingSupport {
                         if (pieceToMove != null && pieceToMove.getColor() == turn) {
                             if (boardPanel.getCanMoveToList().contains(new Coordanate(x, y))) {
                                 board.setPiece(selectedPiece, null);
-                                board.setPiece(x, y, pieceToMove);
+
+                                Piece capture = board.getPiece(x, y);
+                                if( capture!= null && capture.getColor() == turn
+                                        && !(capture instanceof Combination) && !(pieceToMove instanceof Combination)) {
+                                    board.setPiece(x, y, new Combination(pieceToMove,capture));
+                                }
+                                else {
+                                    board.setPiece(x, y, pieceToMove);
+                                }
                                 turn = turn == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
                                 status.setText( new FenParser().format(board));
                                 boardPanel.setCanMoveToList(null, null);

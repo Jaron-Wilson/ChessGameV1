@@ -32,6 +32,7 @@ public class Rook extends Piece {
                 break;
             }
         }
+
         for (int x = current.getX(), y = current.getY() - 1; y >= 0; y--) {
             if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
                 break;

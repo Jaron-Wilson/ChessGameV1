@@ -123,7 +123,10 @@ public class FenParser {
                 buffer.append(spacing);
                 spacing = 0;
             }
-            buffer.append("/");
+
+            if( y<7 ) {
+                buffer.append("/");
+            }
         }
         return buffer.toString();
     }

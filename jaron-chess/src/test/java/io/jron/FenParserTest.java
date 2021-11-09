@@ -97,6 +97,6 @@ class FenParserTest {
         Board board = new FenParser().parse("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
 
         String fen = new FenParser().format(board);
-        System.out.println(fen);
+        assertEquals("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR", fen);
     }
 }

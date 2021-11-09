@@ -28,10 +28,10 @@ public abstract class Piece {
             moves.add(new Coordanate(x, y));
             return true;
         } else {
-            if (p.getColor() != color) {
+            //if (p.getColor() != color) {
                 moves.add(new Coordanate(x, y));
-                return false;
-            }
+            //    return false;
+            //}
         }
 
         return false;
@@ -43,7 +43,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return color + " " + getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 
     public enum Color {

@@ -17,19 +17,15 @@ public class Knight extends Piece {
         List<Coordanate> moves = new ArrayList<>(8);
 
         for (int y = current.getY() - 2; y <= current.getY() + 2; y += 4) {
-
             for (int x = current.getX() - 1; x <= current.getX() + 2; x += 2) {
                 addIfEmptyAndMoreThanThat(moves, board, x, y);
             }
-
         }
 
         for (int y = current.getY() - 1; y <= current.getY() + 1; y += 2) {
-
             for (int x = current.getX() - 2; x <= current.getX() + 2; x += 4) {
                 addIfEmptyAndMoreThanThat(moves, board, x, y);
             }
-
         }
 
 

@@ -77,7 +77,6 @@ public class Pawn extends Piece {
             }
         }
 
-
         return moves;
     }
 }
