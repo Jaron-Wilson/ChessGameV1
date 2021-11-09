@@ -1,5 +1,6 @@
 package io.jron.piece;
 
+
 import io.jron.Board;
 import io.jron.Coordanate;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private Color color = null;
+    private Color color;
 
     public Piece(Color color) {
         this.color = color;
@@ -18,9 +19,9 @@ public abstract class Piece {
         return color;
     }
 
-    public boolean addIfEmptyAndMoreThanThat(List<Coordanate> moves , Board board, int x, int y) {
+    public boolean addIfEmptyAndMoreThanThat(List<Coordanate> moves, Board board, int x, int y) {
         if (x < 0 || y < 0 || x > 7 || y > 7) return false;
-        System.out.println(String.format("x = %d, y = %d", x, y));
+        System.out.printf("x = %d, y = %d%n", x, y);
 
         Piece p = board.getPiece(x, y);
         if (p == null) {
@@ -38,6 +39,11 @@ public abstract class Piece {
 
     public List<Coordanate> canMoveTo(Board board, Coordanate current) {
         return Collections.emptyList();
+    }
+
+    @Override
+    public String toString() {
+        return color + " " + getClass().getSimpleName();
     }
 
     public enum Color {

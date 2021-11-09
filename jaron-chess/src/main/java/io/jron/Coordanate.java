@@ -22,10 +22,7 @@ public class Coordanate {
 
     @Override
     public String toString() {
-        return "Cordanate{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "Cordanate{x=" + x + ", y=" + y + '}';
     }
 
     @Override

@@ -17,9 +17,9 @@ public class Rook extends Piece {
         List<Coordanate> moves = new ArrayList<>(14);
 
         for (int y = current.getY(), x = current.getX() - 1; x >= 0; x--) {
-           if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
-               break;
-           }
+            if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
+                break;
+            }
         }
         for (int y = current.getY(), x = current.getX() + 1; x < board.getWidth(); x++) {
             if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {

@@ -24,6 +24,7 @@ public class MutableBoard implements Board {
     public Piece setPiece(Coordanate c, Piece piece) {
         return setPiece(c.getX(), c.getY(), piece);
     }
+
     public Piece setPiece(int x, int y, Piece piece) {
         board[x][y] = piece;
         return piece;

@@ -38,30 +38,29 @@ public class Queen extends Piece {
             }
         }
 
-        for (int x = current.getX()+1, y = current.getY() -1;x < 8 && y >= 0; x++, y--) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() + 1, y = current.getY() - 1; x < 8 && y >= 0; x++, y--) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
-        for (int x = current.getX()+1, y = current.getY() + 1;x < 8 && y < 8; x++, y++) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() + 1, y = current.getY() + 1; x < 8 && y < 8; x++, y++) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
-        for (int x = current.getX()-1, y = current.getY() + 1;x > 0 && y < 8; x--, y++) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() - 1, y = current.getY() + 1; x > 0 && y < 8; x--, y++) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
-        for (int x = current.getX()-1, y = current.getY() - 1;x > 0 && y > 0; x--, y--) {
-            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x,y);
-            if(!canMove) break;
+        for (int x = current.getX() - 1, y = current.getY() - 1; x > 0 && y > 0; x--, y--) {
+            boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
+            if (!canMove) break;
         }
 
 
         return moves;
     }
-
 
 
 }
