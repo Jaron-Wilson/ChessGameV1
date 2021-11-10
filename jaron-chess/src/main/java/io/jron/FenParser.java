@@ -57,45 +57,7 @@ public class FenParser {
 
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    /**
-     * This factory returns a piece from a char. The mapping is as follows:
-     * <ul>
-     *     <li><b>R</b> : White Rook</li>
-     *     <li><b>N</b> : White Knight</li>
-     *     <li><b>Q</b> : White Queen</li>
-     *     <li><b>K</b> : White King</li>
-     *     <li><b>P</b> : White Pawn</li>
-     *     <li><b>B</b> : White Bishop</li>
-     * </ul>
-     * <ul>
-     *     <li><b>r</b> : Black Rook</li>
-     *     <li><b>n</b> : Black Knight</li>
-     *     <li><b>q</b> : Black Queen</li>
-     *     <li><b>k</b> : Black King</li>
-     *     <li><b>p</b> : Black Pawn</li>
-     *     <li><b>b</b> : Black Bishop</li>
-     * </ul>
-     * <ul>
-     *     <li><b>*</b> : <code>null</code></li>
-     * </ul>
-     */
-    public static Piece getPiece(char c) {
-        return switch (c) {
-            case 'r' -> new Rook(Piece.Color.BLACK);
-            case 'n' -> new Knight(Piece.Color.BLACK);
-            case 'q' -> new Queen(Piece.Color.BLACK);
-            case 'k' -> new King(Piece.Color.BLACK);
-            case 'p' -> new Pawn(Piece.Color.BLACK);
-            case 'b' -> new Bishop(Piece.Color.BLACK);
-            case 'R' -> new Rook(Piece.Color.WHITE);
-            case 'N' -> new Knight(Piece.Color.WHITE);
-            case 'Q' -> new Queen(Piece.Color.WHITE);
-            case 'K' -> new King(Piece.Color.WHITE);
-            case 'P' -> new Pawn(Piece.Color.WHITE);
-            case 'B' -> new Bishop(Piece.Color.WHITE);
-            default -> null;
-        };
-    }
+
 
     /**
      * Parses the fen notation into a board
@@ -137,5 +99,85 @@ public class FenParser {
         }
 
         return board;
+    }
+
+    public String format(Board board){
+
+        StringBuilder buffer = new StringBuilder();
+
+        for(int y = 0, spacing = 0; y<8; y++) {
+            for (int x = 0; x < 8; x++) {
+                Piece p = board.getPiece(x, y);
+                if(p != null){
+                    if(spacing > 0){
+                        buffer.append(spacing);
+                        spacing = 0;
+                    }
+                    buffer.append( getNotation(p) );
+                } else {
+                    spacing++;
+                }
+            }
+
+            if(spacing > 0){
+                buffer.append(spacing);
+                spacing = 0;
+            }
+            buffer.append("/");
+        }
+        return buffer.toString();
+    }
+
+
+    /**
+     * This factory returns a piece from a char. The mapping is as follows:
+     * <ul>
+     *     <li><b>R</b> : White Rook</li>
+     *     <li><b>N</b> : White Knight</li>
+     *     <li><b>Q</b> : White Queen</li>
+     *     <li><b>K</b> : White King</li>
+     *     <li><b>P</b> : White Pawn</li>
+     *     <li><b>B</b> : White Bishop</li>
+     * </ul>
+     * <ul>
+     *     <li><b>r</b> : Black Rook</li>
+     *     <li><b>n</b> : Black Knight</li>
+     *     <li><b>q</b> : Black Queen</li>
+     *     <li><b>k</b> : Black King</li>
+     *     <li><b>p</b> : Black Pawn</li>
+     *     <li><b>b</b> : Black Bishop</li>
+     * </ul>
+     * <ul>
+     *     <li><b>*</b> : <code>null</code></li>
+     * </ul>
+     */
+    public static Piece getPiece(char c) {
+        return switch (c) {
+            case 'r' -> new Rook(Piece.Color.BLACK);
+            case 'n' -> new Knight(Piece.Color.BLACK);
+            case 'q' -> new Queen(Piece.Color.BLACK);
+            case 'k' -> new King(Piece.Color.BLACK);
+            case 'p' -> new Pawn(Piece.Color.BLACK);
+            case 'b' -> new Bishop(Piece.Color.BLACK);
+            case 'R' -> new Rook(Piece.Color.WHITE);
+            case 'N' -> new Knight(Piece.Color.WHITE);
+            case 'Q' -> new Queen(Piece.Color.WHITE);
+            case 'K' -> new King(Piece.Color.WHITE);
+            case 'P' -> new Pawn(Piece.Color.WHITE);
+            case 'B' -> new Bishop(Piece.Color.WHITE);
+            default -> null;
+        };
+    }
+
+    public static String getNotation(Piece p) {
+        return switch (p.getClass().getSimpleName()){
+            case "Rook" -> p.getColor() == Piece.Color.WHITE ? "R" : "r";
+            case "Knight" -> p.getColor() == Piece.Color.WHITE ? "N" : "n";
+            case "Bishop" -> p.getColor() == Piece.Color.WHITE ? "B" : "b";
+            case "King" -> p.getColor() == Piece.Color.WHITE ? "K" : "k";
+            case "Queen" -> p.getColor() == Piece.Color.WHITE ? "Q" : "q";
+            case "Pawn" -> p.getColor() == Piece.Color.WHITE ? "P" : "p";
+            default -> "?";
+        };
     }
 }
