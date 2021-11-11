@@ -57,7 +57,7 @@ public class FenParser {
 
     // Lowercase is BLACK!
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-    public static final String STARTING_JARON = "rnbqkb1r/ppppppnp/8/8/8/4PPp1/PPPP2PP/RNBKQBNR w KQkq - 0 1";
+    public static final String STARTING_JARON = "rnbqkb1r/ppp3np/3ppp2/8/8/4PPp1/PPPP2PP/RNBKQBNR w KQkq - 0 1";
 
 
 
