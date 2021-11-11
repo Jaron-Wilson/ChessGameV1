@@ -55,7 +55,9 @@ import io.jron.piece.*;
  */
 public class FenParser {
 
+    // Lowercase is BLACK!
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    public static final String STARTING_JARON = "rnbqkb1r/ppppppnp/6p1/8/8/4PPp1/PPPP2PP/RNBKQBNR w KQkq - 0 1";
 
 
 

@@ -48,7 +48,7 @@ public class SwingSupport {
         if (board == null) {
             board = new MutableBoard();
             //Black
-            fen.parse(FenParser.STARTING_POSITION, board);
+            fen.parse(FenParser.STARTING_JARON, board);
 
             BoardPanel boardPanel = new BoardPanel(board);
 
