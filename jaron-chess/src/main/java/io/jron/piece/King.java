@@ -28,4 +28,9 @@ public class King extends Piece {
         }
         return moves;
     }
+
+    @Override
+    public int getPieceId() {
+        return 1;
+    }
 }

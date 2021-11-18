@@ -8,19 +8,20 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private Color color = null;
+    private final Color color;
 
     public Piece(Color color) {
         this.color = color;
     }
 
+    public abstract int getPieceId();
     public Color getColor() {
         return color;
     }
 
     public boolean addIfEmptyAndMoreThanThat(List<Coordanate> moves , Board board, int x, int y) {
         if (x < 0 || y < 0 || x > 7 || y > 7) return false;
-        System.out.println(String.format("x = %d, y = %d", x, y));
+        System.out.printf("x = %d, y = %d%n", x, y);
 
         Piece p = board.getPiece(x, y);
         if (p == null) {

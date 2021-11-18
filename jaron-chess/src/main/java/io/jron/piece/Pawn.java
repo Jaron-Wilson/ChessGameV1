@@ -77,7 +77,11 @@ public class Pawn extends Piece {
             }
         }
 
-
         return moves;
+    }
+
+    @Override
+    public int getPieceId() {
+        return 5;
     }
 }

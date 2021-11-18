@@ -40,4 +40,9 @@ public class Knight extends Piece {
 
         return moves;
     }
+
+    @Override
+    public int getPieceId() {
+        return 3;
+    }
 }

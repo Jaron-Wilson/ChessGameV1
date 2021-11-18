@@ -62,6 +62,9 @@ public class Queen extends Piece {
         return moves;
     }
 
-
+    @Override
+    public int getPieceId() {
+        return 0;
+    }
 
 }
