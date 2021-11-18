@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 
 
         if (getColor() == Color.BLACK) {
-            int maxY = current.getY()  + (current.getY() == 1 ? 2 : 1 );
+            int maxY = current.getY() + (current.getY() == 1 ? 2 : 1);
             for (int y = current.getY() + 1; y <= maxY; y++) {
                 Piece spot = board.getPiece(x, y);
                 if (spot == null) {
@@ -30,7 +30,7 @@ public class Pawn extends Piece {
                 }
             }
 
-            if( x>0) {
+            if (x > 0) {
 //                 Checks [ ][P][ ]
 //                        [x][ ][ ]
                 Piece capture = board.getPiece(x - 1, current.getY() + 1);
@@ -39,7 +39,7 @@ public class Pawn extends Piece {
                 }
             }
 
-            if( x < board.getWidth()-1) {
+            if (x < board.getWidth() - 1) {
 //                 Checks [ ][P][ ]
 //                        [ ][ ][x]
                 Piece capture = board.getPiece(x + 1, current.getY() + 1);
@@ -58,7 +58,7 @@ public class Pawn extends Piece {
                     break;
                 }
             }
-            if( x > 0) {
+            if (x > 0) {
 //                 Checks [x][ ][ ]
 //                        [ ][P][ ]
                 Piece capture = board.getPiece(x - 1, current.getY() - 1);
@@ -67,12 +67,12 @@ public class Pawn extends Piece {
                 }
             }
 
-            if( x < board.getWidth() - 1) {
+            if (x < board.getWidth() - 1) {
 //                 Checks [ ][ ][x]
 //                        [ ][P][ ]
-                    Piece capture = board.getPiece(x + 1, current.getY() - 1);
-                    if (capture != null && capture.getColor() == Color.BLACK) {
-                        moves.add(new Coordanate(x + 1, current.getY() - 1));
+                Piece capture = board.getPiece(x + 1, current.getY() - 1);
+                if (capture != null && capture.getColor() == Color.BLACK) {
+                    moves.add(new Coordanate(x + 1, current.getY() - 1));
                 }
             }
         }
