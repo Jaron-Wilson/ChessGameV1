@@ -1,28 +1,30 @@
-io/jron/piece/ImageFactory.java
- io.jron.piece.ImageFactory
+io/jron/piece/Queen.java
+ io.jron.piece.Queen
 io/jron/piece/Rook.java
  io.jron.piece.Rook
 io/jron/piece/Pawn.java
  io.jron.piece.Pawn
+io/jron/SwingSupport.java
+ io.jron.SwingSupport
+ io.jron.SwingSupport$1
+io/jron/piece/ImageFactory.java
+ io.jron.piece.ImageFactory
+io/jron/MutableBoard.java
+ io.jron.MutableBoard
+io/jron/piece/King.java
+ io.jron.piece.King
+io/jron/piece/Bishop.java
+ io.jron.piece.Bishop
+io/jron/BoardPanel.java
+ io.jron.BoardPanel
+io/jron/FenParser.java
+ io.jron.FenParser
+io/jron/piece/Knight.java
+ io.jron.piece.Knight
 io/jron/Coordanate.java
  io.jron.Coordanate
 io/jron/piece/Piece.java
  io.jron.piece.Piece
  io.jron.piece.Piece$Color
-io/jron/MutableBoard.java
- io.jron.MutableBoard
 io/jron/Board.java
  io.jron.Board
-io/jron/BoardPanel.java
- io.jron.BoardPanel
-io/jron/piece/Queen.java
- io.jron.piece.Queen
-io/jron/piece/Bishop.java
- io.jron.piece.Bishop
-io/jron/piece/Knight.java
- io.jron.piece.Knight
-io/jron/SwingSupport.java
- io.jron.SwingSupport
- io.jron.SwingSupport$1
-io/jron/piece/King.java
- io.jron.piece.King
