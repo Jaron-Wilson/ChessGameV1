@@ -41,7 +41,7 @@ public class StandardChess implements MoveListener {
                 board.setPiece(coordanate.getX(), coordanate.getY(), selectedPiece);
                 turn = turn == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
 
-                setSelected(null, null, null);
+                setStateOfTheGame(null, null, null);
                 return;
             } else {
                 System.out.println("MORON!");
@@ -54,14 +54,14 @@ public class StandardChess implements MoveListener {
         if (clickedPiece != null) {
             //this.selectedPiece = coordanate;
             System.out.println(clickedPiece.getColor() + " " + clickedPiece.getClass().getSimpleName());
-            setSelected(clickedPiece, coordanate, clickedPiece.canMoveTo(board, coordanate));
+            setStateOfTheGame(clickedPiece, coordanate, clickedPiece.canMoveTo(board, coordanate));
             return;
         }
 
-        setSelected(null, null, null);
+        setStateOfTheGame(null, null, null);
     }
 
-    private void setSelected(Piece piece, Coordanate selectedCoordanate, List<Coordanate> canMoveToList) {
+    private void setStateOfTheGame(Piece piece, Coordanate selectedCoordanate, List<Coordanate> canMoveToList) {
         this.selectedPiece = piece;
         this.selectedCoordanate = selectedCoordanate;
         this.canMoveToList = canMoveToList;
