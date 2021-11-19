@@ -1,6 +1,6 @@
-package io.jron;
+package io.github.jron.chess.common;
 
-import io.jron.piece.*;
+import io.github.jron.chess.common.piece.*;
 
 /**
  * <p>Forsyth–Edwards Notation (FEN) is a standard notation for describing a particular board position of a chess game.
@@ -59,78 +59,6 @@ public class FenParser {
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     public static final String STARTING_JARON = "rnbqkb1r/ppp3np/3ppp2/8/8/4PPp1/PPPP2PP/RNBKQBNR w KQkq - 0 1";
 
-
-
-    /**
-     * Parses the fen notation into a board
-     * <p>
-     * todo: Only the (1)Piece placement are parsed, everything else after the space is ignored for now.
-     *
-     * @param fen Portable Game Notation
-     * @return A Board containing the state of the loaded game
-     */
-    public Board parse(String fen) {
-        return parse(fen, new MutableBoard());
-    }
-
-    /**
-     * Parses the fen notation into a board
-     * <p>
-     * todo: Only the (1)Piece placement are parsed, everything else after the space is ignored for now.
-     *
-     * @param fen   Portable Game Notation
-     * @param board The <code>Board</code> instance to populate
-     * @return A Board containing the state of the loaded game
-     */
-    public Board parse(String fen, MutableBoard board) {
-        String[] lines = fen.split("[/ ]");
-        for (int y = 0, length = lines.length; y < length && y < 8; y++) {
-            String line = lines[y];
-            int x = 0;
-            for (char c : line.toCharArray()) {
-                if (Character.isLetter(c)) {
-                    Piece piece = getPiece(c);
-                    if (piece != null) {
-                        board.setPiece(x++, y, piece);
-                    }
-                } else if (Character.isDigit(c)) {
-                    int steps = Character.getNumericValue(c);
-                    x += steps;
-                }
-            }
-        }
-
-        return board;
-    }
-
-    public String format(Board board){
-
-        StringBuilder buffer = new StringBuilder();
-
-        for(int y = 0, spacing = 0; y<8; y++) {
-            for (int x = 0; x < 8; x++) {
-                Piece p = board.getPiece(x, y);
-                if(p != null){
-                    if(spacing > 0){
-                        buffer.append(spacing);
-                        spacing = 0;
-                    }
-                    buffer.append( getNotation(p) );
-                } else {
-                    spacing++;
-                }
-            }
-
-            if(spacing > 0){
-                buffer.append(spacing);
-                spacing = 0;
-            }
-            buffer.append("/");
-        }
-        return buffer.toString();
-    }
-
-
     /**
      * This factory returns a piece from a char. The mapping is as follows:
      * <ul>
@@ -172,7 +100,7 @@ public class FenParser {
     }
 
     public static String getNotation(Piece p) {
-        return switch (p.getClass().getSimpleName()){
+        return switch (p.getClass().getSimpleName()) {
             case "Rook" -> p.getColor() == Piece.Color.WHITE ? "R" : "r";
             case "Knight" -> p.getColor() == Piece.Color.WHITE ? "N" : "n";
             case "Bishop" -> p.getColor() == Piece.Color.WHITE ? "B" : "b";
@@ -181,5 +109,74 @@ public class FenParser {
             case "Pawn" -> p.getColor() == Piece.Color.WHITE ? "P" : "p";
             default -> "?";
         };
+    }
+
+    /**
+     * Parses the fen notation into a board
+     * <p>
+     * todo: Only the (1)Piece placement are parsed, everything else after the space is ignored for now.
+     *
+     * @param fen Portable Game Notation
+     * @return A Board containing the state of the loaded game
+     */
+    public Board parse(String fen) {
+        return parse(fen, new StandardBoard());
+    }
+
+    /**
+     * Parses the fen notation into a board
+     * <p>
+     * todo: Only the (1)Piece placement are parsed, everything else after the space is ignored for now.
+     *
+     * @param fen   Portable Game Notation
+     * @param board The <code>Board</code> instance to populate
+     * @return A Board containing the state of the loaded game
+     */
+    public Board parse(String fen, StandardBoard board) {
+        String[] lines = fen.split("[/ ]");
+        for (int y = 0, length = lines.length; y < length && y < 8; y++) {
+            String line = lines[y];
+            int x = 0;
+            for (char c : line.toCharArray()) {
+                if (Character.isLetter(c)) {
+                    Piece piece = getPiece(c);
+                    if (piece != null) {
+                        board.setPiece(x++, y, piece);
+                    }
+                } else if (Character.isDigit(c)) {
+                    int steps = Character.getNumericValue(c);
+                    x += steps;
+                }
+            }
+        }
+
+        return board;
+    }
+
+    public String format(Board board) {
+
+        StringBuilder buffer = new StringBuilder();
+
+        for (int y = 0, spacing = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                Piece p = board.getPiece(x, y);
+                if (p != null) {
+                    if (spacing > 0) {
+                        buffer.append(spacing);
+                        spacing = 0;
+                    }
+                    buffer.append(getNotation(p));
+                } else {
+                    spacing++;
+                }
+            }
+
+            if (spacing > 0) {
+                buffer.append(spacing);
+                spacing = 0;
+            }
+            buffer.append("/");
+        }
+        return buffer.toString();
     }
 }

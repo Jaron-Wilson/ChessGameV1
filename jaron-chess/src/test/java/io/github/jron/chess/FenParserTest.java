@@ -1,6 +1,9 @@
-package io.jron;
+package io.github.jron.chess;
 
-import io.jron.piece.*;
+import io.github.jron.chess.common.Board;
+import io.github.jron.chess.common.Coordanate;
+import io.github.jron.chess.common.FenParser;
+import io.github.jron.chess.common.piece.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -93,7 +96,7 @@ class FenParserTest {
     }
 
     @Test
-    public void testFormat(){
+    public void testFormat() {
         Board board = new FenParser().parse("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
 
         String fen = new FenParser().format(board);
