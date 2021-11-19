@@ -18,7 +18,6 @@ public class Pawn extends Piece {
 
         int x = current.getX();
 
-
         if (getColor() == Color.BLACK) {
             int maxY = current.getY() + (current.getY() == 1 ? 2 : 1);
             for (int y = current.getY() + 1; y <= maxY; y++) {
@@ -77,7 +76,11 @@ public class Pawn extends Piece {
             }
         }
 
-
         return moves;
+    }
+
+    @Override
+    public int getPieceId() {
+        return 5;
     }
 }

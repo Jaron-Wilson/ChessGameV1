@@ -15,6 +15,7 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public abstract int getPieceId();
     public Color getColor() {
         return color;
     }
