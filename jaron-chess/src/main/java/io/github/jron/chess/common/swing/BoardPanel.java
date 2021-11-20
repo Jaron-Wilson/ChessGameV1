@@ -7,6 +7,5 @@ import java.awt.event.MouseEvent;
 
 public interface BoardPanel {
     Coordanate convert(MouseEvent event);
-
     Component getComponent();
 }

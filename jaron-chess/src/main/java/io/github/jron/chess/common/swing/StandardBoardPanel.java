@@ -48,16 +48,10 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
         //Draw the pieces on the board
         for (int x = 0, width = board.getWidth(); x < width; x++) {
             for (int y = 0, height = board.getHeight(); y < height; y++) {
-
                 g.setColor(((x + (y % 2)) % 2 == 0) ? Color.WHITE.darker() : Color.GRAY);
-
                 g.fillRoundRect(x * PIECE_SIZE, y * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5, 3, 3);
                 Piece piece = board.getPiece(x, y);
-
                 if ((piece != null)) {
-                    //g.setColor(piece.getColor() == Piece.Color.BLACK ? Color.BLACK : Color.WHITE);
-                    //g.drawString(piece.getClass().getSimpleName(), x * PIECE_SIZE + PIECE_SIZE / 2, y * PIECE_SIZE + PIECE_SIZE / 2);
-
                     g.drawImage(images.getImage(piece, this), x * PIECE_SIZE, y * PIECE_SIZE, this);
                 }
             }
