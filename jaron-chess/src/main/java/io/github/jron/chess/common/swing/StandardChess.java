@@ -1,6 +1,6 @@
 package io.github.jron.chess.common.swing;
 
-import io.github.jron.chess.common.Coordanate;
+import io.github.jron.chess.common.Coordinate;
 import io.github.jron.chess.common.FenParser;
 import io.github.jron.chess.common.StandardBoard;
 import io.github.jron.chess.common.piece.Piece;
@@ -12,9 +12,9 @@ public class StandardChess implements MoveListener {
 
     private Piece.Color turn = Piece.Color.WHITE;
     private Piece selectedPiece;
-    private Coordanate selectedCoordanate;
+    private Coordinate selectedCoordinate;
 
-    private List<Coordanate> canMoveToList;
+    private List<Coordinate> canMoveToList;
 
     private StandardBoard board;
     private StandardBoardPanel boardPanel;
@@ -33,11 +33,11 @@ public class StandardChess implements MoveListener {
     }
 
     @Override
-    public void selected(Coordanate coordanate) {
+    public void selected(Coordinate coordanate) {
 
         if (selectedPiece != null && selectedPiece.getColor() == turn) {
             if (canMoveToList != null && canMoveToList.contains(coordanate)) {
-                board.setPiece(selectedCoordanate, null);
+                board.setPiece(selectedCoordinate, null);
                 board.setPiece(coordanate.getX(), coordanate.getY(), selectedPiece);
                 turn = turn == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
 
@@ -61,9 +61,9 @@ public class StandardChess implements MoveListener {
         setStateOfTheGame(null, null, null);
     }
 
-    private void setStateOfTheGame(Piece piece, Coordanate selectedCoordanate, List<Coordanate> canMoveToList) {
+    private void setStateOfTheGame(Piece piece, Coordinate selectedCoordanate, List<Coordinate> canMoveToList) {
         this.selectedPiece = piece;
-        this.selectedCoordanate = selectedCoordanate;
+        this.selectedCoordinate = selectedCoordanate;
         this.canMoveToList = canMoveToList;
         this.boardPanel.setCanMoveToList(selectedCoordanate, canMoveToList);
     }

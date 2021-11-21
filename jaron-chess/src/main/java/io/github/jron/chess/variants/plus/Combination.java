@@ -1,7 +1,7 @@
 package io.github.jron.chess.variants.plus;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordanate;
+import io.github.jron.chess.common.Coordinate;
 import io.github.jron.chess.common.piece.Piece;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class Combination extends Piece {
     }
 
     @Override
-    public List<Coordanate> canMoveTo(Board board, Coordanate current) {
-        List<Coordanate> moves = new ArrayList<>(20);
+    public List<Coordinate> canMoveTo(Board board, Coordinate current) {
+        List<Coordinate> moves = new ArrayList<>(20);
         moves.addAll(piece1.canMoveTo(board, current));
         moves.addAll(piece2.canMoveTo(board, current));
 

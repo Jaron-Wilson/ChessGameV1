@@ -1,25 +1,21 @@
 package io.github.jron.chess.variants.plus.swing;
 
 import io.github.jron.chess.common.piece.Piece;
-import io.github.jron.chess.common.swing.ImageFactory;
 import io.github.jron.chess.common.swing.StandardImageFactory;
 import io.github.jron.chess.variants.plus.Combination;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 
 public class CombinationImageFactory extends StandardImageFactory {
 
-    public CombinationImageFactory() throws IOException
-    {
+    public CombinationImageFactory() throws IOException {
         super();
     }
 
     public BufferedImage getImage(Piece piece, ImageObserver observer) {
-        if(piece instanceof Combination combination){
+        if (piece instanceof Combination combination) {
 
             BufferedImage image1 = getImage(combination.getPiece1(), observer);
             BufferedImage image2 = getImage(combination.getPiece2(), observer);

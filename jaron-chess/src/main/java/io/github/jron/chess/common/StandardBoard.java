@@ -21,7 +21,7 @@ public class StandardBoard implements Board {
         return board[x][y];
     }
 
-    public Piece setPiece(Coordanate c, Piece piece) {
+    public Piece setPiece(Coordinate c, Piece piece) {
         return setPiece(c.getX(), c.getY(), piece);
     }
 

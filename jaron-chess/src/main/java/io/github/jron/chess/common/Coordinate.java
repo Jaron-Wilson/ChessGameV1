@@ -2,12 +2,12 @@ package io.github.jron.chess.common;
 
 import java.util.Objects;
 
-public class Coordanate {
+public class Coordinate {
 
     private final int x;
     private final int y;
 
-    public Coordanate(int x, int y) {
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -29,7 +29,7 @@ public class Coordanate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Coordanate that = (Coordanate) o;
+        Coordinate that = (Coordinate) o;
         return x == that.x && y == that.y;
     }
 

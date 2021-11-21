@@ -1,6 +1,6 @@
 package io.github.jron.chess.variants.plus.swing;
 
-import io.github.jron.chess.common.Coordanate;
+import io.github.jron.chess.common.Coordinate;
 import io.github.jron.chess.common.FenParser;
 import io.github.jron.chess.common.StandardBoard;
 import io.github.jron.chess.common.piece.Piece;
@@ -16,9 +16,9 @@ public class ChessPlus implements MoveListener {
 
     private Piece.Color turn = Piece.Color.WHITE;
     private Piece selectedPiece;
-    private Coordanate selectedCoordanate;
+    private Coordinate selectedCoordanate;
 
-    private List<Coordanate> canMoveToList;
+    private List<Coordinate> canMoveToList;
 
     private StandardBoard board;
     private StandardBoardPanel boardPanel;
@@ -39,7 +39,7 @@ public class ChessPlus implements MoveListener {
     }
 
     @Override
-    public void selected(Coordanate coordanate) {
+    public void selected(Coordinate coordanate) {
 
         if (selectedPiece != null && selectedPiece.getColor() == turn) {
 
@@ -77,7 +77,7 @@ public class ChessPlus implements MoveListener {
         setSelected(null, null, null);
     }
 
-    private void setSelected(Piece piece, Coordanate selectedCoordanate, List<Coordanate> canMoveToList) {
+    private void setSelected(Piece piece, Coordinate selectedCoordanate, List<Coordinate> canMoveToList) {
         this.selectedPiece = piece;
         this.selectedCoordanate = selectedCoordanate;
         this.canMoveToList = canMoveToList;

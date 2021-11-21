@@ -1,7 +1,7 @@
 package io.github.jron.chess.common.swing;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordanate;
+import io.github.jron.chess.common.Coordinate;
 import io.github.jron.chess.common.piece.Piece;
 
 import javax.swing.*;
@@ -19,8 +19,8 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
     private final Board board;
     private final Color[] COLORS = {Color.GRAY, Color.GRAY, Color.RED, Color.BLACK};
     protected Dimension defaultDimension;
-    private List<Coordanate> CanMoveToList;
-    private Coordanate selectedPiece = null;
+    private List<Coordinate> CanMoveToList;
+    private Coordinate selectedPiece = null;
 
     private ImageFactory images;
 
@@ -59,30 +59,30 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
 
         if (CanMoveToList != null) {
             g.setColor(Color.RED);
-            for (Coordanate c : CanMoveToList) {
+            for (Coordinate c : CanMoveToList) {
                 g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
             }
         }
     }
 
-    public void setCanMoveToList(Coordanate selectedPiece, List<Coordanate> canMoveToList) {
+    public void setCanMoveToList(Coordinate selectedPiece, List<Coordinate> canMoveToList) {
         this.selectedPiece = selectedPiece;
         CanMoveToList = canMoveToList;
     }
 
-    public Coordanate getSelectedPiece() {
+    public Coordinate getSelectedPiece() {
         return selectedPiece;
     }
 
-    public List<Coordanate> getCanMoveToList() {
+    public List<Coordinate> getCanMoveToList() {
         return CanMoveToList;
     }
 
     @Override
-    public Coordanate convert(MouseEvent e) {
+    public Coordinate convert(MouseEvent e) {
         int x = e.getX() / StandardBoardPanel.PIECE_SIZE;
         int y = e.getY() / StandardBoardPanel.PIECE_SIZE;
-        return new Coordanate(x, y);
+        return new Coordinate(x, y);
     }
 
     @Override
