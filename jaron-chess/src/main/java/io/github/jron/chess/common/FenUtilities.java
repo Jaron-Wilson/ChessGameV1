@@ -53,7 +53,7 @@ import io.github.jron.chess.common.piece.*;
  * </p>
  * <i>- https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</i>
  */
-public class FenParser {
+public class FenUtilities {
 
     // Lowercase is BLACK!
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -111,6 +111,23 @@ public class FenParser {
         };
     }
 
+    public static String getNotation(Piece.Color color) {
+        return switch (color) {
+            case WHITE -> "w";
+            case BLACK -> "b";
+        };
+    }
+
+    public static Piece.Color getColor(String c) {
+        return switch (c) {
+            case "w" -> Piece.Color.WHITE;
+            case "b" -> Piece.Color.BLACK;
+            default -> null;
+        };
+    }
+
+
+
     /**
      * Parses the fen notation into a board
      * <p>
@@ -133,8 +150,9 @@ public class FenParser {
      * @return A Board containing the state of the loaded game
      */
     public Board parse(String fen, StandardBoard board) {
+        int y = 0;
         String[] lines = fen.split("[/ ]");
-        for (int y = 0, length = lines.length; y < length && y < 8; y++) {
+        for (int length = lines.length; y < length && y < 8; y++) {
             String line = lines[y];
             int x = 0;
             for (char c : line.toCharArray()) {
@@ -150,6 +168,8 @@ public class FenParser {
             }
         }
 
+        Piece.Color turn = getColor(lines[y]);
+        //board.setTurn(turn);
         return board;
     }
 
@@ -177,6 +197,9 @@ public class FenParser {
             }
             buffer.append("/");
         }
+
+        buffer.append(" ").append(getNotation(board.getTurn().get()));
+
         return buffer.toString();
     }
 }

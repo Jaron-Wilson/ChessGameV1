@@ -1,7 +1,7 @@
 package io.github.jron.chess.common.piece;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordinate;
+import io.github.jron.chess.common.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Coordinate> canMoveTo(Board board, Coordinate current) {
-        List<Coordinate> moves = new ArrayList<>(4);
+    public List<Position> canMoveTo(Board board, Position current) {
+        List<Position> moves = new ArrayList<>(4);
 
         int x = current.getX();
 
@@ -31,7 +31,7 @@ public class Pawn extends Piece {
 //                        [x][ ][ ]
                 Piece capture = board.getPiece(x - 1, current.getY() + 1);
                 if (capture != null && capture.getColor() == Color.WHITE) {
-                    moves.add(new Coordinate(x - 1, current.getY() + 1));
+                    moves.add(new Position(x - 1, current.getY() + 1));
                 }
             }
 
@@ -40,7 +40,7 @@ public class Pawn extends Piece {
 //                        [ ][ ][x]
                 Piece capture = board.getPiece(x + 1, current.getY() + 1);
                 if (capture != null && capture.getColor() == Color.WHITE) {
-                    moves.add(new Coordinate(x + 1, current.getY() + 1));
+                    moves.add(new Position(x + 1, current.getY() + 1));
                 }
             }
         }
@@ -56,7 +56,7 @@ public class Pawn extends Piece {
 //                        [ ][P][ ]
                 Piece capture = board.getPiece(x - 1, current.getY() - 1);
                 if (capture != null && capture.getColor() == Color.BLACK) {
-                    moves.add(new Coordinate(x - 1, current.getY() - 1));
+                    moves.add(new Position(x - 1, current.getY() - 1));
                 }
             }
 
@@ -65,7 +65,7 @@ public class Pawn extends Piece {
 //                        [ ][P][ ]
                 Piece capture = board.getPiece(x + 1, current.getY() - 1);
                 if (capture != null && capture.getColor() == Color.BLACK) {
-                    moves.add(new Coordinate(x + 1, current.getY() - 1));
+                    moves.add(new Position(x + 1, current.getY() - 1));
                 }
             }
         }

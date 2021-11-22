@@ -1,12 +1,12 @@
 package io.github.jron.chess.common.swing;
 
-import io.github.jron.chess.common.Coordinate;
+import io.github.jron.chess.common.Position;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public interface BoardPanel {
-    Coordinate convert(MouseEvent event);
+    Position convert(MouseEvent event);
 
     Component getComponent();
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class StandardImageFactory implements ImageFactory {
 
-    private BufferedImage[][] images;
+    private final BufferedImage[][] images;
 
     public StandardImageFactory() throws IOException {
 

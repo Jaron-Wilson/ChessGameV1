@@ -1,7 +1,7 @@
 package io.github.jron.chess.common.piece;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordinate;
+import io.github.jron.chess.common.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Coordinate> canMoveTo(Board board, Coordinate current) {
-        List<Coordinate> moves = new ArrayList<>(14);
+    public List<Position> canMoveTo(Board board, Position current) {
+        List<Position> moves = new ArrayList<>(14);
 
         for (int x = current.getX() + 1, y = current.getY() - 1; x < 8 && y >= 0; x++, y--) {
             boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);

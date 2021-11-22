@@ -1,15 +1,13 @@
 package io.github.jron.chess;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordinate;
-import io.github.jron.chess.common.FenParser;
-import io.github.jron.chess.common.piece.Pawn;
-import io.github.jron.chess.common.piece.Piece;
+import io.github.jron.chess.common.FenUtilities;
+import io.github.jron.chess.common.Position;
+import io.github.jron.chess.common.piece.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import io.github.jron.chess.common.piece.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,36 +25,36 @@ class FenParserTest {
 
         //Add the black non-pawns
         Collections.addAll(arguments,
-                Arguments.of(new Coordinate(0, 0), new Rook(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(1, 0), new Knight(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(2, 0), new Bishop(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(3, 0), new Queen(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(4, 0), new King(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(5, 0), new Bishop(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(6, 0), new Knight(Piece.Color.BLACK)),
-                Arguments.of(new Coordinate(7, 0), new Rook(Piece.Color.BLACK))
+                Arguments.of(new Position(0, 0), new Rook(Piece.Color.BLACK)),
+                Arguments.of(new Position(1, 0), new Knight(Piece.Color.BLACK)),
+                Arguments.of(new Position(2, 0), new Bishop(Piece.Color.BLACK)),
+                Arguments.of(new Position(3, 0), new Queen(Piece.Color.BLACK)),
+                Arguments.of(new Position(4, 0), new King(Piece.Color.BLACK)),
+                Arguments.of(new Position(5, 0), new Bishop(Piece.Color.BLACK)),
+                Arguments.of(new Position(6, 0), new Knight(Piece.Color.BLACK)),
+                Arguments.of(new Position(7, 0), new Rook(Piece.Color.BLACK))
         );
 
         //Add the black pawns
         arguments.addAll(IntStream.range(0, 8).mapToObj(x ->
-                Arguments.of(new Coordinate(x, 1), new Pawn(Piece.Color.BLACK))).collect(Collectors.toList())
+                Arguments.of(new Position(x, 1), new Pawn(Piece.Color.BLACK))).collect(Collectors.toList())
         );
 
         //Add the white pawns
         arguments.addAll(IntStream.range(0, 8).mapToObj(x ->
-                Arguments.of(new Coordinate(x, 6), new Pawn(Piece.Color.WHITE))).collect(Collectors.toList())
+                Arguments.of(new Position(x, 6), new Pawn(Piece.Color.WHITE))).collect(Collectors.toList())
         );
 
         //Add the white non-pawns
         Collections.addAll(arguments,
-                Arguments.of(new Coordinate(0, 7), new Rook(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(1, 7), new Knight(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(2, 7), new Bishop(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(3, 7), new Queen(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(4, 7), new King(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(5, 7), new Bishop(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(6, 7), new Knight(Piece.Color.WHITE)),
-                Arguments.of(new Coordinate(7, 7), new Rook(Piece.Color.WHITE))
+                Arguments.of(new Position(0, 7), new Rook(Piece.Color.WHITE)),
+                Arguments.of(new Position(1, 7), new Knight(Piece.Color.WHITE)),
+                Arguments.of(new Position(2, 7), new Bishop(Piece.Color.WHITE)),
+                Arguments.of(new Position(3, 7), new Queen(Piece.Color.WHITE)),
+                Arguments.of(new Position(4, 7), new King(Piece.Color.WHITE)),
+                Arguments.of(new Position(5, 7), new Bishop(Piece.Color.WHITE)),
+                Arguments.of(new Position(6, 7), new Knight(Piece.Color.WHITE)),
+                Arguments.of(new Position(7, 7), new Rook(Piece.Color.WHITE))
         );
 
         return arguments;
@@ -72,8 +70,8 @@ class FenParserTest {
      */
     @ParameterizedTest
     @MethodSource("provideOpeningBoard")
-    public void testStartingPosition(Coordinate c, Piece expected) {
-        Board board = new FenParser().parse(FenParser.STARTING_POSITION);
+    public void testStartingPosition(Position c, Piece expected) {
+        Board board = new FenUtilities().parse(FenUtilities.STARTING_POSITION);
 
         Piece piece = board.getPiece(c.getX(), c.getY());
 
@@ -84,7 +82,7 @@ class FenParserTest {
 
     @Test
     public void testStartFromOpeningBoardMoveTo_1e4() {
-        Board board = new FenParser().parse("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        Board board = new FenUtilities().parse("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
 
         //Check if the starting pawn spot on the e rank is empty
         Piece empty = board.getPiece(4, 6);
@@ -99,9 +97,11 @@ class FenParserTest {
 
     @Test
     public void testFormat() {
-        Board board = new FenParser().parse("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        Board board = new FenUtilities().parse("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
 
-        String fen = new FenParser().format(board);
+        String fen = new FenUtilities().format(board);
         System.out.println(fen);
+
+        assertEquals("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR/ b", fen);
     }
 }
