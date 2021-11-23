@@ -55,9 +55,8 @@ import io.github.jron.chess.common.piece.*;
  */
 public class FenUtilities {
 
-    // Lowercase is BLACK!
+    // Lowercase is BLACK, upper case is WHITE
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-    public static final String STARTING_JARON = "rnbqkb1r/ppp3np/3ppp2/8/8/4PPp1/PPPP2PP/RNBKQBNR w KQkq - 0 1";
 
     /**
      * This factory returns a piece from a char. The mapping is as follows:
@@ -169,7 +168,9 @@ public class FenUtilities {
         }
 
         Piece.Color turn = getColor(lines[y]);
-        //board.setTurn(turn);
+        while ( !board.getTurn().get().equals(turn) ){
+            board.getTurn().increment();
+        }
         return board;
     }
 

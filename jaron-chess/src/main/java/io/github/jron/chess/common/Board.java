@@ -4,7 +4,7 @@ package io.github.jron.chess.common;
 import io.github.jron.chess.common.piece.Piece;
 
 /**
- * A board holds the state of the game in a two dimensional array.
+ * A board holds the state of the game in a two-dimensional array.
  * A zero '0' represents an empty spot, any other number represents
  * a players io.jron.piece.
  */
@@ -38,5 +38,5 @@ public interface Board {
      *
      * @return The color whos turn it is
      */
-    Incrementor<Piece.Color> getTurn();
+    Incrementer<Piece.Color> getTurn();
 }

@@ -8,10 +8,10 @@ public class StandardBoard implements Board {
 
     //private Piece.Color turn = Piece.Color.WHITE;
 
-    private final Incrementor<Piece.Color> incrementor;
+    private final Incrementer<Piece.Color> incrementor;
 
     public StandardBoard(){
-       this.incrementor = new Incrementor<>(0,  Piece.Color.WHITE, Piece.Color.BLACK);
+       this.incrementor = new Incrementer<>(0,  Piece.Color.WHITE, Piece.Color.BLACK);
     }
     @Override
     public int getWidth() {
@@ -38,7 +38,7 @@ public class StandardBoard implements Board {
     }
 
     @Override
-    public Incrementor<Piece.Color> getTurn() {
+    public Incrementer<Piece.Color> getTurn() {
         return incrementor;
     }
 
