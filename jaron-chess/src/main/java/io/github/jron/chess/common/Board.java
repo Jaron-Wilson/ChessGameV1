@@ -1,7 +1,10 @@
 package io.github.jron.chess.common;
 
 
+import io.github.jron.chess.common.piece.Color;
 import io.github.jron.chess.common.piece.Piece;
+
+import java.util.stream.Stream;
 
 /**
  * A board holds the state of the game in a two-dimensional array.
@@ -33,10 +36,12 @@ public interface Board {
      */
     Piece getPiece(int x, int y);
 
+    Stream<Piece> getAllPieces();
+
     /**
      * Getter for the current turn
      *
      * @return The color whos turn it is
      */
-    Incrementer<Piece.Color> getTurn();
+    Incrementer<Color> getTurn();
 }

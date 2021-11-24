@@ -8,6 +8,8 @@ import java.util.List;
 
 public class King extends Piece {
 
+    private boolean canCastleKingSide = true, isCanCastleQueenSide = true;
+
     public King(Color color) {
         super(color);
     }
@@ -32,5 +34,21 @@ public class King extends Piece {
     @Override
     public int getPieceId() {
         return 1;
+    }
+
+    public boolean canCastleKingSide() {
+        return canCastleKingSide;
+    }
+
+    public boolean canCastleQueenSide() {
+        return isCanCastleQueenSide;
+    }
+
+    public void setCanCastleKingSide(boolean canCastleKingSide) {
+        this.canCastleKingSide = canCastleKingSide;
+    }
+
+    public void setCanCastleQueenSide(boolean canCastleQueenSide) {
+        isCanCastleQueenSide = canCastleQueenSide;
     }
 }

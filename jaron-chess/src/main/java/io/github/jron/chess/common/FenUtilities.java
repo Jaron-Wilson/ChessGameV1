@@ -2,6 +2,10 @@ package io.github.jron.chess.common;
 
 import io.github.jron.chess.common.piece.*;
 
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /**
  * <p>Forsyth–Edwards Notation (FEN) is a standard notation for describing a particular board position of a chess game.
  * The purpose of FEN is to provide all the necessary information to restart a game from a particular position.</p>
@@ -53,7 +57,7 @@ import io.github.jron.chess.common.piece.*;
  * </p>
  * <i>- https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</i>
  */
-public class FenUtilities {
+public class FenUtilities<B extends StandardBoard> {
 
     // Lowercase is BLACK, upper case is WHITE
     public static final String STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -82,49 +86,48 @@ public class FenUtilities {
      */
     public static Piece getPiece(char c) {
         return switch (c) {
-            case 'r' -> new Rook(Piece.Color.BLACK);
-            case 'n' -> new Knight(Piece.Color.BLACK);
-            case 'q' -> new Queen(Piece.Color.BLACK);
-            case 'k' -> new King(Piece.Color.BLACK);
-            case 'p' -> new Pawn(Piece.Color.BLACK);
-            case 'b' -> new Bishop(Piece.Color.BLACK);
-            case 'R' -> new Rook(Piece.Color.WHITE);
-            case 'N' -> new Knight(Piece.Color.WHITE);
-            case 'Q' -> new Queen(Piece.Color.WHITE);
-            case 'K' -> new King(Piece.Color.WHITE);
-            case 'P' -> new Pawn(Piece.Color.WHITE);
-            case 'B' -> new Bishop(Piece.Color.WHITE);
+            case 'r' -> new Rook(Color.BLACK);
+            case 'n' -> new Knight(Color.BLACK);
+            case 'q' -> new Queen(Color.BLACK);
+            case 'k' -> new King(Color.BLACK);
+            case 'p' -> new Pawn(Color.BLACK);
+            case 'b' -> new Bishop(Color.BLACK);
+            case 'R' -> new Rook(Color.WHITE);
+            case 'N' -> new Knight(Color.WHITE);
+            case 'Q' -> new Queen(Color.WHITE);
+            case 'K' -> new King(Color.WHITE);
+            case 'P' -> new Pawn(Color.WHITE);
+            case 'B' -> new Bishop(Color.WHITE);
             default -> null;
         };
     }
 
     public static String getNotation(Piece p) {
         return switch (p.getClass().getSimpleName()) {
-            case "Rook" -> p.getColor() == Piece.Color.WHITE ? "R" : "r";
-            case "Knight" -> p.getColor() == Piece.Color.WHITE ? "N" : "n";
-            case "Bishop" -> p.getColor() == Piece.Color.WHITE ? "B" : "b";
-            case "King" -> p.getColor() == Piece.Color.WHITE ? "K" : "k";
-            case "Queen" -> p.getColor() == Piece.Color.WHITE ? "Q" : "q";
-            case "Pawn" -> p.getColor() == Piece.Color.WHITE ? "P" : "p";
+            case "Rook" -> p.getColor() == Color.WHITE ? "R" : "r";
+            case "Knight" -> p.getColor() == Color.WHITE ? "N" : "n";
+            case "Bishop" -> p.getColor() == Color.WHITE ? "B" : "b";
+            case "King" -> p.getColor() == Color.WHITE ? "K" : "k";
+            case "Queen" -> p.getColor() == Color.WHITE ? "Q" : "q";
+            case "Pawn" -> p.getColor() == Color.WHITE ? "P" : "p";
             default -> "?";
         };
     }
 
-    public static String getNotation(Piece.Color color) {
+    public static String getNotation(Color color) {
         return switch (color) {
             case WHITE -> "w";
             case BLACK -> "b";
         };
     }
 
-    public static Piece.Color getColor(String c) {
+    public static Color getColor(String c) {
         return switch (c) {
-            case "w" -> Piece.Color.WHITE;
-            case "b" -> Piece.Color.BLACK;
+            case "w" -> Color.WHITE;
+            case "b" -> Color.BLACK;
             default -> null;
         };
     }
-
 
 
     /**
@@ -136,7 +139,7 @@ public class FenUtilities {
      * @return A Board containing the state of the loaded game
      */
     public Board parse(String fen) {
-        return parse(fen, new StandardBoard());
+        return parse(fen, (B) new StandardBoard());
     }
 
     /**
@@ -148,17 +151,19 @@ public class FenUtilities {
      * @param board The <code>Board</code> instance to populate
      * @return A Board containing the state of the loaded game
      */
-    public Board parse(String fen, StandardBoard board) {
-        int y = 0;
-        String[] lines = fen.split("[/ ]");
-        for (int length = lines.length; y < length && y < 8; y++) {
-            String line = lines[y];
+    public B parse(String fen, B board) {
+        int step = 0;
+        String[] sections = fen.trim().split("[/ ]");
+
+        //Parse Piece placement
+        for (int length = sections.length; step < length && step < 8; step++) {
+            String line = sections[step];
             int x = 0;
             for (char c : line.toCharArray()) {
                 if (Character.isLetter(c)) {
                     Piece piece = getPiece(c);
                     if (piece != null) {
-                        board.setPiece(x++, y, piece);
+                        board.setPiece(x++, step, piece);
                     }
                 } else if (Character.isDigit(c)) {
                     int steps = Character.getNumericValue(c);
@@ -167,10 +172,60 @@ public class FenUtilities {
             }
         }
 
-        Piece.Color turn = getColor(lines[y]);
-        while ( !board.getTurn().get().equals(turn) ){
+        //Parse Active color
+        String color = sections[step++];
+        Color turn = getColor(color);
+        while (!board.getTurn().get().equals(turn)) {
             board.getTurn().increment();
         }
+
+        //Parse Castling availability
+        String castlingString = sections[step++];
+
+        Map<Color, King> kings = board.getAllPieces()
+                .filter(King.class::isInstance)
+                .map(King.class::cast).collect(Collectors.toMap(Piece::getColor, Function.identity()));
+
+        King white = kings.get(Color.WHITE);
+        if (white != null) {
+            white.setCanCastleQueenSide(false);
+            white.setCanCastleKingSide(false);
+        }
+
+        King black = kings.get(Color.BLACK);
+        if (black != null) {
+            black.setCanCastleQueenSide(false);
+            black.setCanCastleKingSide(false);
+        }
+
+        if (!castlingString.equals("-")) {
+            for (char c : castlingString.toCharArray()) {
+                switch (c) {
+                    case 'K':
+                        if (white != null) white.setCanCastleKingSide(true);
+                        break;
+                    case 'Q':
+                        if (white != null) white.setCanCastleQueenSide(true);
+                        break;
+                    case 'k':
+                        if (black != null) black.setCanCastleKingSide(true);
+                        break;
+                    case 'q':
+                        if (black != null) black.setCanCastleQueenSide(true);
+                        break;
+                }
+            }
+        }
+
+        //Parse En passant
+        String enPassant = sections[step++];
+
+        //Parse Halfmove clock
+        String halfClock = sections[step++];
+
+        //Parse Fullmove number
+        String fullMove = sections[step];
+
         return board;
     }
 
@@ -196,10 +251,35 @@ public class FenUtilities {
                 buffer.append(spacing);
                 spacing = 0;
             }
-            buffer.append("/");
+
+            if( y<7) {
+                buffer.append("/");
+            }
         }
 
+        //Format Active color
         buffer.append(" ").append(getNotation(board.getTurn().get()));
+
+        //Format Castling availability
+        Map<Color, King> kings = board.getAllPieces()
+                .filter(King.class::isInstance)
+                .map(King.class::cast).collect(Collectors.toMap(Piece::getColor, Function.identity()));
+
+        StringBuilder castling = new StringBuilder();
+        King white = kings.get(Color.WHITE);
+        if( white != null) {
+            if( white.canCastleKingSide() ) castling.append("K");
+            if( white.canCastleQueenSide() ) castling.append("Q");
+        }
+        King black = kings.get(Color.BLACK);
+        if( black != null) {
+            if( black.canCastleKingSide() ) castling.append("k");
+            if( black.canCastleQueenSide() ) castling.append("q");
+        }
+        buffer.append(" ").append( castling.length() > 0 ? castling.toString() : "-");
+
+        //todo: Finish the formatting
+        buffer.append( " - 0 1");
 
         return buffer.toString();
     }

@@ -1,6 +1,5 @@
 package io.github.jron.chess.common.piece;
 
-
 import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.Position;
 
@@ -50,7 +49,4 @@ public abstract class Piece {
         return color + " " + getClass().getSimpleName();
     }
 
-    public enum Color {
-        WHITE, BLACK
-    }
 }
