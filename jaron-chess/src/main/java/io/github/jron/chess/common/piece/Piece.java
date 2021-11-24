@@ -2,6 +2,7 @@ package io.github.jron.chess.common.piece;
 
 import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.Position;
+import io.github.jron.chess.common.StandardBoard;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +43,21 @@ public abstract class Piece {
 
     public List<Position> canMoveTo(Board board, Position current) {
         return Collections.emptyList();
+    }
+
+    /**
+     * The piece is responsible for moving itself on the board. This allows for
+     * special situations such as castling.
+     *
+     * @param board The state of the game
+     * @param p1 Starting Position
+     * @param p2 Ending Position
+     * @return Captured piece, null if no piece was captured
+     */
+    public Piece move(StandardBoard board, Position p1, Position p2) {
+        Piece capture = board.removePiece(p2.getX(), p2.getY());
+        board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
+        return capture;
     }
 
     @Override

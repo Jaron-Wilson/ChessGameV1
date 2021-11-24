@@ -2,6 +2,7 @@ package io.github.jron.chess.common.piece;
 
 import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.Position;
+import io.github.jron.chess.common.StandardBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,32 @@ public class King extends Piece {
                 }
             }
         }
+
+        int x = current.getX(), y = current.getY();
+        int numberOfEmptySpacesLeft = 0, numberOfEmptySpacesRight = 0;
+        for(int left=x-1, right=x+1; left>=0||right<8; left--, right++){
+            if( left >= 0 && board.getPiece(left, y) == null ) numberOfEmptySpacesLeft++;
+            if( right < 8 && board.getPiece(right, y) == null ) numberOfEmptySpacesRight++;
+        }
+
+        if( getColor().equals(Color.WHITE) ){
+            if( canCastleQueenSide() && numberOfEmptySpacesLeft == 3 ){
+                addIfEmptyAndMoreThanThat(moves, board, x-2, y);
+            }
+            if( canCastleKingSide() && numberOfEmptySpacesRight == 2){
+                addIfEmptyAndMoreThanThat(moves, board, x+2, y);
+            }
+        }
+
+        if( getColor().equals(Color.BLACK) ){
+            if( canCastleQueenSide() && numberOfEmptySpacesLeft == 3 ){
+                addIfEmptyAndMoreThanThat(moves, board, x-2, y);
+            }
+            if( canCastleKingSide() && numberOfEmptySpacesRight == 2){
+                addIfEmptyAndMoreThanThat(moves, board, x+2, y);
+            }
+        }
+
         return moves;
     }
 
@@ -51,4 +78,21 @@ public class King extends Piece {
     public void setCanCastleQueenSide(boolean canCastleQueenSide) {
         isCanCastleQueenSide = canCastleQueenSide;
     }
+
+    public Piece move(StandardBoard board, Position oldPosition, Position newPosition) {
+        canCastleKingSide = isCanCastleQueenSide = false;
+        Piece captured = super.move(board, oldPosition, newPosition);
+
+        if ( oldPosition.getX() - newPosition.getX() == 2 ) {
+            Piece rook = board.removePiece(0, newPosition.getY());
+            board.setPiece( newPosition.getX()+1, newPosition.getY(), rook);
+        }
+        if ( oldPosition.getX() - newPosition.getX() == -2 ) {
+            Piece rook = board.removePiece(7, newPosition.getY());
+            board.setPiece( newPosition.getX()-1, newPosition.getY(), rook);
+        }
+
+        return captured;
+    }
+
 }

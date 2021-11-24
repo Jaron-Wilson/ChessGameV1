@@ -3,6 +3,7 @@ package io.github.jron.chess.common.swing;
 import io.github.jron.chess.common.FenUtilities;
 import io.github.jron.chess.common.Position;
 import io.github.jron.chess.common.StandardBoard;
+import io.github.jron.chess.common.piece.King;
 import io.github.jron.chess.common.piece.Piece;
 
 import java.io.IOException;
@@ -21,7 +22,11 @@ public class StandardChess implements MoveListener {
     public static void main(String[] args) throws IOException {
 
         StandardChess chess = new StandardChess();
-        chess.board = (StandardBoard) new FenUtilities().parse(FenUtilities.STARTING_POSITION, new StandardBoard());
+        chess.board = new FenUtilities().parse(FenUtilities.STARTING_POSITION, new StandardBoard());
+
+        chess.board = new FenUtilities().parse("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1", new StandardBoard());
+
+
         chess.boardPanel = new StandardBoardPanel(chess.board);
 
         new SwingSupport()
@@ -36,19 +41,15 @@ public class StandardChess implements MoveListener {
 
         if (selectedPiece != null && selectedPiece.getColor() == board.getTurn().get()) {
             if (canMoveToList != null && canMoveToList.contains(coordanate)) {
-                board.setPiece(selectedPosition, null);
-                board.setPiece(coordanate.getX(), coordanate.getY(), selectedPiece);
-                //Piece.Color turn = board.getTurn() == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
-                //board.setTurn(turn);
+                Piece captured = selectedPiece.move(board,selectedPosition, coordanate );
                 board.getTurn().increment();
-
                 setStateOfTheGame(null, null, null);
                 return;
             } else {
                 System.out.println("MORON!");
             }
         } else {
-            System.out.println("Not your TURN DUMMY");
+            System.out.println("Not your TURN DUMMY " + board.getTurn().get());
         }
 
         Piece clickedPiece = board.getPiece(coordanate.getX(), coordanate.getY());

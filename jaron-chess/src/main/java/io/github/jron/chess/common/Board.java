@@ -35,6 +35,7 @@ public interface Board {
      * @return The io.jron.piece at [x,y]
      */
     Piece getPiece(int x, int y);
+    Piece removePiece(int x, int y);
 
     Stream<Piece> getAllPieces();
 

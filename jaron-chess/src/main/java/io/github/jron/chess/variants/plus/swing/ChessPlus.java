@@ -3,6 +3,7 @@ package io.github.jron.chess.variants.plus.swing;
 import io.github.jron.chess.common.FenUtilities;
 import io.github.jron.chess.common.Position;
 import io.github.jron.chess.common.StandardBoard;
+import io.github.jron.chess.common.piece.King;
 import io.github.jron.chess.common.piece.Piece;
 import io.github.jron.chess.common.swing.MoveListener;
 import io.github.jron.chess.common.swing.StandardBoardPanel;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ChessPlus implements MoveListener {
 
     private Piece selectedPiece;
-    private Position selectedCoordanate;
+    private Position selectedPosition;
 
     private List<Position> canMoveToList;
 
@@ -43,15 +44,15 @@ public class ChessPlus implements MoveListener {
         if (selectedPiece != null && selectedPiece.getColor() == board.getTurn().get()) {
 
             if (canMoveToList != null && canMoveToList.contains(coordanate)) {
-                board.setPiece(selectedCoordanate, null);
-
+                //board.setPiece(selectedPosition, null);
                 Piece captured = board.getPiece(coordanate.getX(), coordanate.getY());
 
                 if (captured != null && captured.getColor() == board.getTurn().get()
                         && !(captured instanceof Combination) && !(selectedPiece instanceof Combination)) {
                     board.setPiece(coordanate.getX(), coordanate.getY(), new Combination(selectedPiece, captured));
                 } else {
-                    board.setPiece(coordanate.getX(), coordanate.getY(), selectedPiece);
+                    //board.setPiece(coordanate.getX(), coordanate.getY(), selectedPiece);
+                    selectedPiece.move(board, selectedPosition, coordanate);
                 }
 
                 board.getTurn().increment();
@@ -78,7 +79,7 @@ public class ChessPlus implements MoveListener {
 
     private void setSelected(Piece piece, Position selectedCoordanate, List<Position> canMoveToList) {
         this.selectedPiece = piece;
-        this.selectedCoordanate = selectedCoordanate;
+        this.selectedPosition = selectedCoordanate;
         this.canMoveToList = canMoveToList;
         this.boardPanel.setCanMoveToList(selectedCoordanate, canMoveToList);
     }

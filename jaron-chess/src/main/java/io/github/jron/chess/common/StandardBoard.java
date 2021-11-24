@@ -30,6 +30,13 @@ public class StandardBoard implements Board {
         return board[x][y];
     }
 
+    @Override
+    public Piece removePiece(int x, int y) {
+        Piece p = board[x][y];
+        board[x][y] = null;
+        return p;
+    }
+
 
     public Stream<Piece> getAllPieces() {
         Stream.Builder<Piece> builder = Stream.builder();
