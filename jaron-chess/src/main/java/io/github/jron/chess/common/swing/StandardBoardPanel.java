@@ -17,7 +17,6 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
 
     public static final int PIECE_SIZE = 70;
     private final Board board;
-    private final Color[] COLORS = {Color.GRAY, Color.GRAY, Color.RED, Color.BLACK};
     private final ImageFactory images;
     protected Dimension defaultDimension;
     private List<Position> CanMoveToList;
@@ -59,6 +58,12 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
         if (CanMoveToList != null) {
             g.setColor(Color.RED);
             for (Position c : CanMoveToList) {
+                g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
+            }
+
+            g.setColor(Color.GREEN);
+            Position c = board.getEligibleEnPassant();
+            if (c != null) {
                 g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
             }
         }

@@ -59,6 +59,7 @@ public abstract class Piece {
         moveCount++;
         Piece capture = board.removePiece(p2.getX(), p2.getY());
         board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
+        board.setEligibleEnPassant(null);
         return capture;
     }
 

@@ -35,6 +35,8 @@ public interface Board {
      * @return The io.jron.piece at [x,y]
      */
     Piece getPiece(int x, int y);
+    Piece getPiece(Position p);
+
     Piece removePiece(int x, int y);
 
     Stream<Piece> getAllPieces();
@@ -45,4 +47,6 @@ public interface Board {
      * @return The color whos turn it is
      */
     Incrementer<Color> getTurn();
+
+    Position getEligibleEnPassant();
 }

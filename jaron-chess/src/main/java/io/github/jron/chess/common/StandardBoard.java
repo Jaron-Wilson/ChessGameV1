@@ -11,6 +11,8 @@ public class StandardBoard implements Board {
     private final Piece[][] board = new Piece[8][8];
     private final Incrementer<Color> incrementer;
 
+    private Position eligibleEnPassant;
+
     public StandardBoard() {
         this.incrementer = new Incrementer<>(Color.WHITE, Color.BLACK);
     }
@@ -29,6 +31,10 @@ public class StandardBoard implements Board {
     public Piece getPiece(int x, int y) {
         return board[x][y];
     }
+    public Piece getPiece(Position p) {
+        return getPiece(p.getX(), p.getY());
+    }
+
 
     @Override
     public Piece removePiece(int x, int y) {
@@ -59,6 +65,14 @@ public class StandardBoard implements Board {
     public Piece setPiece(int x, int y, Piece piece) {
         board[x][y] = piece;
         return piece;
+    }
+
+    public Position getEligibleEnPassant() {
+        return eligibleEnPassant;
+    }
+
+    public void setEligibleEnPassant(Position eligibleEnPassant) {
+        this.eligibleEnPassant = eligibleEnPassant;
     }
 
     @Override
