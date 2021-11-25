@@ -9,6 +9,7 @@ import java.util.List;
 
 public abstract class Piece {
 
+    protected int moveCount = 0;
     public static boolean CAN_CAPTURE_OWN = false;
 
     private final Color color;
@@ -55,6 +56,7 @@ public abstract class Piece {
      * @return Captured piece, null if no piece was captured
      */
     public Piece move(StandardBoard board, Position p1, Position p2) {
+        moveCount++;
         Piece capture = board.removePiece(p2.getX(), p2.getY());
         board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
         return capture;
