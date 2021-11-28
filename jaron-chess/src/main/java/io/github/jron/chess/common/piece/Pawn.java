@@ -22,9 +22,15 @@ public class Pawn extends Piece {
         if (getColor() == Color.BLACK) {
             int maxY = current.getY() + (current.getY() == 1 ? 2 : 1);
             for (int y = current.getY() + 1; y <= maxY; y++) {
-                if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
+                Piece capture = board.getPiece(x,y);
+                if (capture == null){
+                    moves.add(new Position(x,y));
+                } else {
                     break;
                 }
+//                if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
+//                    break;
+//                }
             }
 
             if (x > 0 && current.getY() > 0) {
@@ -49,12 +55,20 @@ public class Pawn extends Piece {
                 }
             }
         }
+
         if (getColor() == Color.WHITE) {
             int maxY = current.getY() - (current.getY() == 6 ? 2 : 1);
             for (int y = current.getY() - 1; y >= maxY; y--) {
-                if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
+                Piece capture = board.getPiece(x,y);
+                if (capture == null){
+                    moves.add(new Position(x,y));
+                } else {
                     break;
                 }
+
+//                if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
+//                    break;
+//                }
             }
             if (x > 0 && current.getY() > 0) {
 //                 Checks [x][ ][ ]

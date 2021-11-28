@@ -26,7 +26,7 @@ public class Bishop extends Piece {
             if (!canMove) break;
         }
 
-        for (int x = current.getX() - 1, y = current.getY() + 1; x >+ 0 && y < 8; x--, y++) {
+        for (int x = current.getX() - 1, y = current.getY() + 1; x >= 0 && y < 8; x--, y++) {
             boolean canMove = addIfEmptyAndMoreThanThat(moves, board, x, y);
             if (!canMove) break;
         }
