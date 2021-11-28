@@ -3,6 +3,8 @@ package io.github.jron.chess.common;
 import io.github.jron.chess.common.piece.Color;
 import io.github.jron.chess.common.piece.Piece;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class StandardBoard implements Board {
@@ -56,6 +58,22 @@ public class StandardBoard implements Board {
         }
 
         return builder.build();
+    }
+
+    public Set<Position> getThreatenedPositions(Color color) {
+        Set<Position> positions = new HashSet<>();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (board[x][y] != null) {
+                    Piece p = board[x][y];
+                    if( !p.getColor().equals(color)){
+                        positions.addAll(p.canMoveTo(this, new Position(x,y)));
+                    }
+                }
+            }
+        }
+
+        return positions;
     }
 
     public Piece setPiece(Position c, Piece piece) {

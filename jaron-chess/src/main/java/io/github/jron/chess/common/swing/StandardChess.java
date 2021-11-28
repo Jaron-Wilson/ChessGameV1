@@ -24,7 +24,7 @@ public class StandardChess implements MoveListener {
         StandardChess chess = new StandardChess();
         chess.board = new FenUtilities().parse(FenUtilities.STARTING_POSITION, new StandardBoard());
 
-        chess.board = new FenUtilities().parse("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1", new StandardBoard());
+        //chess.board = new FenUtilities().parse("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1", new StandardBoard());
 
 
         chess.boardPanel = new StandardBoardPanel(chess.board);

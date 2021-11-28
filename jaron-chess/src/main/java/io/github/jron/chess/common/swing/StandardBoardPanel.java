@@ -2,6 +2,7 @@ package io.github.jron.chess.common.swing;
 
 import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.Position;
+import io.github.jron.chess.common.StandardBoard;
 import io.github.jron.chess.common.piece.Piece;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This panel draws the connect four board given a io.jron.Board
@@ -43,10 +45,17 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Set<Position> positions = ((StandardBoard)board).getThreatenedPositions(board.getTurn().get());
+
         //Draw the pieces on the board
         for (int x = 0, width = board.getWidth(); x < width; x++) {
             for (int y = 0, height = board.getHeight(); y < height; y++) {
                 g.setColor(((x + (y % 2)) % 2 == 0) ? Color.WHITE.darker() : Color.GRAY);
+
+                if( positions.contains(new Position(x,y))) {
+                    g.setColor(((x + (y % 2)) % 2 == 0) ? Color.WHITE.brighter().brighter() : Color.BLUE);
+                }
+
                 g.fillRoundRect(x * PIECE_SIZE, y * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5, 3, 3);
                 Piece piece = board.getPiece(x, y);
                 if ((piece != null)) {
@@ -67,6 +76,9 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
                 g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
             }
         }
+
+
+
     }
 
     public void setCanMoveToList(Position selectedPiece, List<Position> canMoveToList) {
