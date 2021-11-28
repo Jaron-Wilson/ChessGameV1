@@ -53,7 +53,7 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
                 g.setColor(((x + (y % 2)) % 2 == 0) ? Color.WHITE.darker() : Color.GRAY);
 
                 if( positions.contains(new Position(x,y))) {
-                    g.setColor(((x + (y % 2)) % 2 == 0) ? Color.WHITE.brighter().brighter() : Color.BLUE);
+                    g.setColor(Color.PINK);
                 }
 
                 g.fillRoundRect(x * PIECE_SIZE, y * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5, 3, 3);

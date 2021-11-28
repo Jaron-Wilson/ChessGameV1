@@ -27,7 +27,7 @@ public class Pawn extends Piece {
                 }
             }
 
-            if (x > 0) {
+            if (x > 0 && current.getY() > 0) {
 //                 Checks [ ][P][ ]
 //                        [x][ ][ ]
                 Position moveTo = new Position(x - 1, current.getY() + 1);
@@ -56,7 +56,7 @@ public class Pawn extends Piece {
                     break;
                 }
             }
-            if (x > 0) {
+            if (x > 0 && current.getY() > 0) {
 //                 Checks [x][ ][ ]
 //                        [ ][P][ ]
                 Position moveTo = new Position(x - 1, current.getY() - 1);
@@ -76,6 +76,42 @@ public class Pawn extends Piece {
                         ||  moveTo.equals(board.getEligibleEnPassant())) {
                     moves.add(moveTo);
                 }
+            }
+        }
+
+        return moves;
+    }
+
+    @Override
+    public List<Position> getThreadedPositions(Board board, Position current) {
+        List<Position> moves = new ArrayList<>(4);
+
+        int x = current.getX();
+
+        if (getColor() == Color.BLACK) {
+            if (x > 0 && current.getY() > 0) {
+//                 Checks [ ][P][ ]
+//                        [x][ ][ ]
+                moves.add(new Position(x - 1, current.getY() + 1));
+            }
+
+            if (x < board.getWidth() - 1) {
+//                 Checks [ ][P][ ]
+//                        [ ][ ][x]
+                moves.add(new Position(x + 1, current.getY() + 1));
+            }
+        }
+        if (getColor() == Color.WHITE) {
+            if ((x > 0) && (current.getY() > 0)) {
+//                 Checks [x][ ][ ]
+//                        [ ][P][ ]
+                moves.add(new Position(x - 1, current.getY() - 1));
+            }
+
+            if (x < board.getWidth() - 1) {
+//                 Checks [ ][ ][x]
+//                        [ ][P][ ]
+                    moves.add(new Position(x + 1, current.getY() - 1));
             }
         }
 

@@ -46,6 +46,10 @@ public abstract class Piece {
         return Collections.emptyList();
     }
 
+    public List<Position> getThreadedPositions(Board board, Position current) {
+        return canMoveTo(board, current);
+    }
+
     /**
      * The piece is responsible for moving itself on the board. This allows for
      * special situations such as castling.
