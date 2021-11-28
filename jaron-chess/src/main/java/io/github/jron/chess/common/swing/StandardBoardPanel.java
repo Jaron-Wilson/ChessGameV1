@@ -1,7 +1,7 @@
 package io.github.jron.chess.common.swing;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordinate;
+import io.github.jron.chess.common.Position;
 import io.github.jron.chess.common.piece.Piece;
 
 import javax.swing.*;
@@ -17,22 +17,20 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
 
     public static final int PIECE_SIZE = 70;
     private final Board board;
-    private final Color[] COLORS = {Color.GRAY, Color.GRAY, Color.RED, Color.BLACK};
+    private final ImageFactory images;
     protected Dimension defaultDimension;
-    private List<Coordinate> CanMoveToList;
-    private Coordinate selectedPiece = null;
-
-    private ImageFactory images;
+    private List<Position> CanMoveToList;
+    private Position selectedPiece = null;
 
     public StandardBoardPanel(Board board) throws IOException {
         this(board, new StandardImageFactory());
     }
 
     public StandardBoardPanel(Board board, ImageFactory imageFactory) {
-        this.setOpaque(false);
+        setOpaque(false);
         this.board = board;
-        this.defaultDimension = new Dimension(board.getWidth() * PIECE_SIZE - 5, board.getHeight() * PIECE_SIZE - 5);
-        this.images = imageFactory;
+        images = imageFactory;
+        defaultDimension = new Dimension(board.getWidth() * PIECE_SIZE - 5, board.getHeight() * PIECE_SIZE - 5);
     }
 
 
@@ -59,30 +57,36 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
 
         if (CanMoveToList != null) {
             g.setColor(Color.RED);
-            for (Coordinate c : CanMoveToList) {
+            for (Position c : CanMoveToList) {
+                g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
+            }
+
+            g.setColor(Color.GREEN);
+            Position c = board.getEligibleEnPassant();
+            if (c != null) {
                 g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
             }
         }
     }
 
-    public void setCanMoveToList(Coordinate selectedPiece, List<Coordinate> canMoveToList) {
+    public void setCanMoveToList(Position selectedPiece, List<Position> canMoveToList) {
         this.selectedPiece = selectedPiece;
         CanMoveToList = canMoveToList;
     }
 
-    public Coordinate getSelectedPiece() {
+    public Position getSelectedPiece() {
         return selectedPiece;
     }
 
-    public List<Coordinate> getCanMoveToList() {
+    public List<Position> getCanMoveToList() {
         return CanMoveToList;
     }
 
     @Override
-    public Coordinate convert(MouseEvent e) {
+    public Position convert(MouseEvent e) {
         int x = e.getX() / StandardBoardPanel.PIECE_SIZE;
         int y = e.getY() / StandardBoardPanel.PIECE_SIZE;
-        return new Coordinate(x, y);
+        return new Position(x, y);
     }
 
     @Override

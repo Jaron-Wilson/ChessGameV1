@@ -1,8 +1,8 @@
 package io.github.jron.chess.common.swing;
 
-import io.github.jron.chess.common.FenParser;
+import io.github.jron.chess.common.FenUtilities;
 import io.github.jron.chess.common.StandardBoard;
-import io.github.jron.chess.common.piece.Piece;
+import io.github.jron.chess.common.piece.Color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
  */
 public class SwingSupport {
 
-    private Piece.Color turn = Piece.Color.WHITE;
+    private final Color turn = Color.WHITE;
 
     private StandardBoard board;
     private BoardPanel boardPanel;
@@ -29,7 +29,7 @@ public class SwingSupport {
      *     <li>To configure other settings suck as the goal</li>
      * </ol>
      *
-     * @param board
+     * @param board The state of the game
      * @return this to keep the builder going
      */
     public SwingSupport setBoard(StandardBoard board) {
@@ -51,7 +51,7 @@ public class SwingSupport {
      * Launches the JFrame that contains the io.jron.BoardPanel to display the game.
      */
     public void run() {
-        FenParser fen = new FenParser();
+        FenUtilities<StandardBoard> fen = new FenUtilities<>();
 
         JPanel statusPanel = new JPanel(new BorderLayout());
         final JTextField status = new JTextField(fen.format(board));

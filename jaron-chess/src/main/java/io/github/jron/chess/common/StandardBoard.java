@@ -1,27 +1,64 @@
 package io.github.jron.chess.common;
 
+import io.github.jron.chess.common.piece.Color;
 import io.github.jron.chess.common.piece.Piece;
+
+import java.util.stream.Stream;
 
 public class StandardBoard implements Board {
 
+    private final int width = 8, height = 8;
     private final Piece[][] board = new Piece[8][8];
+    private final Incrementer<Color> incrementer;
+
+    private Position eligibleEnPassant;
+
+    public StandardBoard() {
+        this.incrementer = new Incrementer<>(Color.WHITE, Color.BLACK);
+    }
 
     @Override
     public int getWidth() {
-        return 8;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return 8;
+        return height;
     }
 
     @Override
     public Piece getPiece(int x, int y) {
         return board[x][y];
     }
+    public Piece getPiece(Position p) {
+        return getPiece(p.getX(), p.getY());
+    }
 
-    public Piece setPiece(Coordinate c, Piece piece) {
+
+    @Override
+    public Piece removePiece(int x, int y) {
+        Piece p = board[x][y];
+        board[x][y] = null;
+        return p;
+    }
+
+
+    public Stream<Piece> getAllPieces() {
+        Stream.Builder<Piece> builder = Stream.builder();
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (board[x][y] != null) {
+                    builder.add(board[x][y]);
+                }
+            }
+        }
+
+        return builder.build();
+    }
+
+    public Piece setPiece(Position c, Piece piece) {
         return setPiece(c.getX(), c.getY(), piece);
     }
 
@@ -29,4 +66,18 @@ public class StandardBoard implements Board {
         board[x][y] = piece;
         return piece;
     }
+
+    public Position getEligibleEnPassant() {
+        return eligibleEnPassant;
+    }
+
+    public void setEligibleEnPassant(Position eligibleEnPassant) {
+        this.eligibleEnPassant = eligibleEnPassant;
+    }
+
+    @Override
+    public Incrementer<Color> getTurn() {
+        return incrementer;
+    }
+
 }

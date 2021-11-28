@@ -1,7 +1,8 @@
 package io.github.jron.chess.common.piece;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordinate;
+import io.github.jron.chess.common.Position;
+import io.github.jron.chess.common.StandardBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Coordinate> canMoveTo(Board board, Coordinate current) {
-        List<Coordinate> moves = new ArrayList<>(4);
+    public List<Position> canMoveTo(Board board, Position current) {
+        List<Position> moves = new ArrayList<>(4);
 
         int x = current.getX();
 
@@ -29,18 +30,22 @@ public class Pawn extends Piece {
             if (x > 0) {
 //                 Checks [ ][P][ ]
 //                        [x][ ][ ]
-                Piece capture = board.getPiece(x - 1, current.getY() + 1);
-                if (capture != null && capture.getColor() == Color.WHITE) {
-                    moves.add(new Coordinate(x - 1, current.getY() + 1));
+                Position moveTo = new Position(x - 1, current.getY() + 1);
+                Piece capture = board.getPiece(moveTo);
+                if ((capture != null && capture.getColor() == Color.WHITE)
+                ||  moveTo.equals(board.getEligibleEnPassant())) {
+                    moves.add(moveTo);
                 }
             }
 
             if (x < board.getWidth() - 1) {
 //                 Checks [ ][P][ ]
 //                        [ ][ ][x]
-                Piece capture = board.getPiece(x + 1, current.getY() + 1);
-                if (capture != null && capture.getColor() == Color.WHITE) {
-                    moves.add(new Coordinate(x + 1, current.getY() + 1));
+                Position moveTo = new Position(x + 1, current.getY() + 1);
+                Piece capture = board.getPiece(moveTo);
+                if ((capture != null && capture.getColor() == Color.WHITE)
+                        ||  moveTo.equals(board.getEligibleEnPassant())) {
+                    moves.add(moveTo);
                 }
             }
         }
@@ -54,23 +59,60 @@ public class Pawn extends Piece {
             if (x > 0) {
 //                 Checks [x][ ][ ]
 //                        [ ][P][ ]
-                Piece capture = board.getPiece(x - 1, current.getY() - 1);
-                if (capture != null && capture.getColor() == Color.BLACK) {
-                    moves.add(new Coordinate(x - 1, current.getY() - 1));
+                Position moveTo = new Position(x - 1, current.getY() - 1);
+                Piece capture = board.getPiece(moveTo);
+                if ((capture != null && capture.getColor() == Color.BLACK)
+                        ||  moveTo.equals(board.getEligibleEnPassant())) {
+                    moves.add(moveTo);
                 }
             }
 
             if (x < board.getWidth() - 1) {
 //                 Checks [ ][ ][x]
 //                        [ ][P][ ]
-                Piece capture = board.getPiece(x + 1, current.getY() - 1);
-                if (capture != null && capture.getColor() == Color.BLACK) {
-                    moves.add(new Coordinate(x + 1, current.getY() - 1));
+                Position moveTo = new Position(x + 1, current.getY() - 1);
+                Piece capture = board.getPiece(moveTo);
+                if ((capture != null && capture.getColor() == Color.BLACK)
+                        ||  moveTo.equals(board.getEligibleEnPassant())) {
+                    moves.add(moveTo);
                 }
             }
         }
 
         return moves;
+    }
+
+    @Override
+    public Piece move(StandardBoard board, Position p1, Position p2) {
+
+        Piece enPassantCapture = null;
+        if( p2.equals(board.getEligibleEnPassant())){
+            enPassantCapture = board.removePiece(p2.getX(), p1.getY());
+        }
+
+        Piece capture = super.move(board, p1, p2);
+        if( enPassantCapture != null) capture = enPassantCapture;
+
+
+        if ( p1.getY() - p2.getY() == 2 ) {
+            if ( p2.getX()>0 && (board.getPiece(p2.getX()-1, p2.getY()) instanceof Pawn
+            || board.getPiece(p2.getX()+1, p2.getY()) instanceof Pawn)){
+
+                board.setEligibleEnPassant(new Position(p2.getX(), p2.getY()+1));
+                System.out.println("EligibleEnPassant: " + board.getEligibleEnPassant());
+            }
+        }
+
+        if ( p1.getY() - p2.getY() == -2 ) {
+            if ( p2.getX()>0 && (board.getPiece(p2.getX()+1, p2.getY()) instanceof Pawn
+                    || board.getPiece(p2.getX()-1, p2.getY()) instanceof Pawn)){
+
+                board.setEligibleEnPassant(new Position(p2.getX(), p2.getY()-1));
+                System.out.println("EligibleEnPassant: " + board.getEligibleEnPassant());
+            }
+        }
+
+        return capture;
     }
 
     @Override

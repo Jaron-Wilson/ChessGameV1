@@ -1,10 +1,14 @@
 package io.github.jron.chess.common.piece;
 
 import io.github.jron.chess.common.Board;
-import io.github.jron.chess.common.Coordinate;
+import io.github.jron.chess.common.Position;
+import io.github.jron.chess.common.StandardBoard;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class Rook extends Piece {
 
@@ -13,8 +17,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Coordinate> canMoveTo(Board board, Coordinate current) {
-        List<Coordinate> moves = new ArrayList<>(14);
+    public List<Position> canMoveTo(Board board, Position current) {
+        List<Position> moves = new ArrayList<>(14);
 
         for (int y = current.getY(), x = current.getX() - 1; x >= 0; x--) {
             if (!addIfEmptyAndMoreThanThat(moves, board, x, y)) {
@@ -39,6 +43,26 @@ public class Rook extends Piece {
         }
 
         return moves;
+    }
+
+    @Override
+    public Piece move(StandardBoard board, Position p1, Position p2) {
+
+        //Castle logic.
+        if (moveCount == 0){
+            Optional<King> king = board.getAllPieces()
+                    .filter(p -> p.getColor().equals(getColor()))
+                    .filter(King.class::isInstance)
+                    .map(King.class::cast).findFirst();
+            if(king.isPresent()) {
+                if (p1.getX() == 0) {
+                    king.get().setCanCastleQueenSide(false);
+                } else {
+                    king.get().setCanCastleKingSide(false);
+                }
+            }
+        }
+        return super.move(board, p1, p2);
     }
 
     @Override
