@@ -14,7 +14,7 @@ public class StandardChess implements MoveListener {
 
     private Piece selectedPiece;
     private Position selectedPosition;
-    public ImageFactory imageFactory;
+    private ImageFactory imageFactory;
 
     private List<Position> canMoveToList;
 
