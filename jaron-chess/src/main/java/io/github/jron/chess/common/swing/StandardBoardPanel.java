@@ -54,7 +54,7 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
 
                 if(positions.contains(new Position(x,y))) {
                     if (board.getTurn().get() == io.github.jron.chess.common.piece.Color.BLACK) {
-                        g.setColor(Color.WHITE.brighter());
+                        g.setColor(Color.GRAY.brighter().brighter());
                     }else {
                         g.setColor(Color.BLACK.brighter());
                     }
