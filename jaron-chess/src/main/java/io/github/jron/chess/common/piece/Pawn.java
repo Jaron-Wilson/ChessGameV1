@@ -144,16 +144,16 @@ public class Pawn extends Piece {
         if( enPassantCapture != null) capture = enPassantCapture;
 
 
-        if ( p1.getY() - p2.getY() == 2 ) {
-            if ( p2.getX()>0 && (board.getPiece(p2.getX()-1, p2.getY()) instanceof Pawn
-            || board.getPiece(p2.getX()+1, p2.getY()) instanceof Pawn)){
+        if (p2.getX() < 7 && p1.getY() - p2.getY() == 1 ) {
+            if ( p2.getX()>0 && (board.getPiece(p2.getX() - 1, p2.getY()) instanceof Pawn
+            || board.getPiece(p2.getX() + 1, p2.getY()) instanceof Pawn)){
 
                 board.setEligibleEnPassant(new Position(p2.getX(), p2.getY()+1));
                 System.out.println("EligibleEnPassant: " + board.getEligibleEnPassant());
             }
         }
 
-        if ( p1.getY() - p2.getY() == -2 ) {
+        if (p2.getX() < 7 && p1.getY() - p2.getY() == -1 ) {
             if ( p2.getX()>0 && (board.getPiece(p2.getX()+1, p2.getY()) instanceof Pawn
                     || board.getPiece(p2.getX()-1, p2.getY()) instanceof Pawn)){
 

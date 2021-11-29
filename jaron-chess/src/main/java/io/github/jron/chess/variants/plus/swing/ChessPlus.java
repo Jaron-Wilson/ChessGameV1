@@ -3,7 +3,6 @@ package io.github.jron.chess.variants.plus.swing;
 import io.github.jron.chess.common.FenUtilities;
 import io.github.jron.chess.common.Position;
 import io.github.jron.chess.common.StandardBoard;
-import io.github.jron.chess.common.piece.King;
 import io.github.jron.chess.common.piece.Piece;
 import io.github.jron.chess.common.swing.MoveListener;
 import io.github.jron.chess.common.swing.StandardBoardPanel;

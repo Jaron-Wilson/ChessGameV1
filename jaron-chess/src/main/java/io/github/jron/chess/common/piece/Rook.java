@@ -4,10 +4,8 @@ import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.Position;
 import io.github.jron.chess.common.StandardBoard;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class Rook extends Piece {
