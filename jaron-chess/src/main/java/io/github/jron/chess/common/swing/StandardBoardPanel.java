@@ -56,7 +56,7 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
                     if (board.getTurn().get() == io.github.jron.chess.common.piece.Color.BLACK) {
                         g.setColor(Color.GRAY.brighter().brighter());
                     }else {
-                        g.setColor(Color.BLACK.brighter());
+                        g.setColor(Color.GRAY.darker().darker());
                     }
                 }
 
@@ -80,8 +80,6 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
                 g.drawRect(c.getX() * PIECE_SIZE, c.getY() * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5);
             }
         }
-
-
 
     }
 

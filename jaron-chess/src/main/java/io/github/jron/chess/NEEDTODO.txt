@@ -1,0 +1,8 @@
+FOR CHECK
+1. king cant move to check,
+2. cant move a piece of your own to cause a discovery check,
+3. if in check cant move piece unless it blocks check,
+
+Fix AMPAZANT
+
+

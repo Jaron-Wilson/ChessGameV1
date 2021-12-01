@@ -6,6 +6,8 @@ import io.github.jron.chess.common.StandardBoard;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
 public abstract class Piece {
 
@@ -26,7 +28,7 @@ public abstract class Piece {
 
     public boolean addIfEmptyAndMoreThanThat(List<Position> moves, Board board, int x, int y) {
         if (x < 0 || y < 0 || x > 7 || y > 7) return false;
-        System.out.printf("x = %d, y = %d%n", x, y);
+        //System.out.printf("x = %d, y = %d%n", x, y);
 
         Piece p = board.getPiece(x, y);
         if (p == null) {
@@ -46,8 +48,21 @@ public abstract class Piece {
         return Collections.emptyList();
     }
 
-    public List<Position> getThreadedPositions(Board board, Position current) {
+    public List<Position> getThreatenedPositions(Board board, Position current) {
         return canMoveTo(board, current);
+    }
+
+    public boolean isKingThreatened(Board board, Position current, Color turn) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece  p = board.getPiece(x,y);
+                if (p != null && p.getColor().equals(turn) && p instanceof King) {
+                    Set<Position> positions = board.getThreatenedPositions(turn);
+                    return positions.contains(new Position(x,y));
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -61,10 +76,21 @@ public abstract class Piece {
      */
     public Piece move(StandardBoard board, Position p1, Position p2) {
         moveCount++;
-        Piece capture = board.removePiece(p2.getX(), p2.getY());
-        board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
+        if (isKingThreatened(board, p2, board.getTurn().get())) {
+            System.out.println("!in check!");
+
+        } else {
+            Piece capture = board.removePiece(p2.getX(), p2.getY());
+            board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
+            return capture;
+        }
         board.setEligibleEnPassant(null);
-        return capture;
+//        if (isKingThreatened(board, p2, board.getTurn().get())) {
+//            System.out.println("!in check!");
+//        }
+//
+//        return capture;
+        return null;
     }
 
     @Override

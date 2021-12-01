@@ -1,5 +1,6 @@
 package io.github.jron.chess.common.swing;
 
+import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.FenUtilities;
 import io.github.jron.chess.common.Position;
 import io.github.jron.chess.common.StandardBoard;
@@ -25,9 +26,6 @@ public class StandardChess implements MoveListener {
 
         StandardChess chess = new StandardChess();
         chess.board = new FenUtilities().parse(FenUtilities.STARTING_POSITION, new StandardBoard());
-
-        chess.board = new FenUtilities().parse("r3k2r/pppPPPpp/8/8/8/8/PPPpppPP/R3K2R w KQkq - 0 1", new StandardBoard());
-
 
         chess.boardPanel = new StandardBoardPanel(chess.board, chess.imageFactory = new StandardImageFactory());
 

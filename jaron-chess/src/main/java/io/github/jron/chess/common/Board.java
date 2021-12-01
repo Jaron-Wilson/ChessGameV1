@@ -4,6 +4,7 @@ package io.github.jron.chess.common;
 import io.github.jron.chess.common.piece.Color;
 import io.github.jron.chess.common.piece.Piece;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -40,6 +41,8 @@ public interface Board {
     Piece removePiece(int x, int y);
 
     Stream<Piece> getAllPieces();
+
+    Set<Position> getThreatenedPositions(Color color);
 
     /**
      * Getter for the current turn

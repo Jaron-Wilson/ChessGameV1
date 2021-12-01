@@ -67,7 +67,7 @@ public class StandardBoard implements Board {
                 if (board[x][y] != null) {
                     Piece p = board[x][y];
                     if( !p.getColor().equals(color)){
-                        positions.addAll(p.getThreadedPositions(this, new Position(x,y)));
+                        positions.addAll(p.getThreatenedPositions(this, new Position(x,y)));
                     }
                 }
             }

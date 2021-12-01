@@ -97,7 +97,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> getThreadedPositions(Board board, Position current) {
+    public List<Position> getThreatenedPositions(Board board, Position current) {
         List<Position> moves = new ArrayList<>(4);
 
         int x = current.getX();
@@ -144,7 +144,7 @@ public class Pawn extends Piece {
         if( enPassantCapture != null) capture = enPassantCapture;
 
 
-        if (p2.getX() < 7 && p1.getY() - p2.getY() == 1 ) {
+        if (p2.getX() < 7 && p1.getY() - p2.getY() == 2 ) {
             if ( p2.getX()>0 && (board.getPiece(p2.getX() - 1, p2.getY()) instanceof Pawn
             || board.getPiece(p2.getX() + 1, p2.getY()) instanceof Pawn)){
 
@@ -153,7 +153,7 @@ public class Pawn extends Piece {
             }
         }
 
-        if (p2.getX() < 7 && p1.getY() - p2.getY() == -1 ) {
+        if (p2.getX() < 7 && p1.getY() - p2.getY() == -2 ) {
             if ( p2.getX()>0 && (board.getPiece(p2.getX()+1, p2.getY()) instanceof Pawn
                     || board.getPiece(p2.getX()-1, p2.getY()) instanceof Pawn)){
 
