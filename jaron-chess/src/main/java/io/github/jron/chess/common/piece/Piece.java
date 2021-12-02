@@ -76,21 +76,29 @@ public abstract class Piece {
      */
     public Piece move(StandardBoard board, Position p1, Position p2) {
         moveCount++;
-        if (isKingThreatened(board, p2, board.getTurn().get())) {
-            System.out.println("!in check!");
 
-        } else {
-            Piece capture = board.removePiece(p2.getX(), p2.getY());
-            board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
-            return capture;
-        }
-        board.setEligibleEnPassant(null);
+        Piece capture = board.removePiece(p2.getX(), p2.getY());
+        board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
+
+        if (isKingThreatened(board, p2, board.getTurn().get())) {
+                board.getTurn().increment();
+
+
+                Piece undoMove = board.removePiece(p2.getX(), p2.getY());
+                board.setPiece(p2.getX(), p2.getY(), capture);
+                board.setPiece(p1.getX(), p1.getY(), undoMove);
+                moveCount--;
+                board.setEligibleEnPassant(null);
+                return undoMove;
+            }
+
+//        board.setEligibleEnPassant(null);
 //        if (isKingThreatened(board, p2, board.getTurn().get())) {
 //            System.out.println("!in check!");
 //        }
 //
-//        return capture;
-        return null;
+        return capture;
+//        return null;
     }
 
     @Override
