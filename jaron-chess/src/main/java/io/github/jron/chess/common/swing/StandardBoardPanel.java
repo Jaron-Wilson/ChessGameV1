@@ -52,13 +52,13 @@ public class StandardBoardPanel extends JPanel implements BoardPanel {
             for (int y = 0, height = board.getHeight(); y < height; y++) {
                 g.setColor(((x + (y % 2)) % 2 == 0) ? Color.WHITE.darker() : Color.GRAY);
 
-                if(positions.contains(new Position(x,y))) {
-                    if (board.getTurn().get() == io.github.jron.chess.common.piece.Color.BLACK) {
-                        g.setColor(Color.GRAY.brighter().brighter());
-                    }else {
-                        g.setColor(Color.GRAY.darker().darker());
-                    }
-                }
+//                if(positions.contains(new Position(x,y))) {
+//                    if (board.getTurn().get() == io.github.jron.chess.common.piece.Color.BLACK) {
+//                        g.setColor(Color.GRAY.brighter().brighter());
+//                    }else {
+//                        g.setColor(Color.GRAY.darker().darker());
+//                    }
+//                }
 
                 g.fillRoundRect(x * PIECE_SIZE, y * PIECE_SIZE, PIECE_SIZE - 5, PIECE_SIZE - 5, 3, 3);
                 Piece piece = board.getPiece(x, y);

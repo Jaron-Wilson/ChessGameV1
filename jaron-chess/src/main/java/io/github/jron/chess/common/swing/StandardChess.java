@@ -13,14 +13,14 @@ import java.util.List;
 
 public class StandardChess implements MoveListener {
 
-    private Piece selectedPiece;
-    private Position selectedPosition;
-    private ImageFactory imageFactory;
+    public Piece selectedPiece;
+    public Position selectedPosition;
+    public ImageFactory imageFactory;
 
-    private List<Position> canMoveToList;
+    public List<Position> canMoveToList;
 
-    private StandardBoard board;
-    private StandardBoardPanel boardPanel;
+    public StandardBoard board;
+    public StandardBoardPanel boardPanel;
 
     public static void main(String[] args) throws IOException {
 
@@ -67,7 +67,7 @@ public class StandardChess implements MoveListener {
         setStateOfTheGame(null, null, null);
     }
 
-    private Piece promote(Piece pawn) {
+    public Piece promote(Piece pawn) {
 
         Piece[] pieces = new Piece[]{
                 new Queen(board.getTurn().get()),
@@ -90,7 +90,7 @@ public class StandardChess implements MoveListener {
         return pieces[n];
     }
 
-    private void setStateOfTheGame(Piece piece, Position selectedCoordanate, List<Position> canMoveToList) {
+    public void setStateOfTheGame(Piece piece, Position selectedCoordanate, List<Position> canMoveToList) {
         this.selectedPiece = piece;
         this.selectedPosition = selectedCoordanate;
         this.canMoveToList = canMoveToList;
