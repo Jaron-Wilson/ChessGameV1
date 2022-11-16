@@ -1,4 +1,4 @@
-package io.github.jron.chess.variants.plus.swing;
+package io.github.jron.chess.variants.atomic.swing.plus.swing;
 
 import io.github.jron.chess.common.FenUtilities;
 import io.github.jron.chess.common.Position;
@@ -7,7 +7,7 @@ import io.github.jron.chess.common.piece.Piece;
 import io.github.jron.chess.common.swing.MoveListener;
 import io.github.jron.chess.common.swing.StandardBoardPanel;
 import io.github.jron.chess.common.swing.SwingSupport;
-import io.github.jron.chess.variants.plus.Combination;
+import io.github.jron.chess.variants.atomic.swing.plus.Combination;
 
 import java.io.IOException;
 import java.util.List;

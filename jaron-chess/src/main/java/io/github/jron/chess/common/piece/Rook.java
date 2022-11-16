@@ -44,7 +44,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Piece move(StandardBoard board, Position p1, Position p2) {
+    public boolean move(StandardBoard board, Position p1, Position p2) {
 
         //Castle logic.
         if (moveCount == 0){

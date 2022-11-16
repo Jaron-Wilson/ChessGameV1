@@ -56,9 +56,11 @@ public abstract class Piece {
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Piece  p = board.getPiece(x,y);
-                if (p != null && p.getColor().equals(turn) && p instanceof King) {
-                    Set<Position> positions = board.getThreatenedPositions(turn);
-                    return positions.contains(new Position(x,y));
+                if (p != null && p instanceof King) {
+                    if( p.getColor().equals(turn) ) {
+                        Set<Position> positions = board.getThreatenedPositions(turn);
+                        return positions.contains(new Position(x, y));
+                    }
                 }
             }
         }
@@ -69,36 +71,31 @@ public abstract class Piece {
      * The piece is responsible for moving itself on the board. This allows for
      * special situations such as castling.
      *
-     * @param board The state of the game
+     * @param b The state of the game
      * @param p1 Starting Position
      * @param p2 Ending Position
      * @return Captured piece, null if no piece was captured
      */
-    public Piece move(StandardBoard board, Position p1, Position p2) {
-        moveCount++;
+    public boolean move(StandardBoard b, Position p1, Position p2) {
+        //CHECK CHECKING
+        StandardBoard clone = new StandardBoard(b);
 
-        Piece capture = board.removePiece(p2.getX(), p2.getY());
-        board.setPiece(p2.getX(), p2.getY(), board.removePiece(p1.getX(), p1.getY()));
+        Piece capture = clone.removePiece(p2.getX(), p2.getY());
+        clone.setPiece(p2.getX(), p2.getY(), clone.removePiece(p1.getX(), p1.getY()));
 
-        if (isKingThreatened(board, p2, board.getTurn().get())) {
-                board.getTurn().increment();
-
-
-                Piece undoMove = board.removePiece(p2.getX(), p2.getY());
-                board.setPiece(p2.getX(), p2.getY(), capture);
-                board.setPiece(p1.getX(), p1.getY(), undoMove);
-                moveCount--;
-                board.setEligibleEnPassant(null);
-                return undoMove;
-            }
-
+        if (!isKingThreatened(clone, p2, clone.getTurn().get())) {
+            capture = b.removePiece(p2.getX(), p2.getY());
+            b.setPiece(p2.getX(), p2.getY(), b.removePiece(p1.getX(), p1.getY()));
+            moveCount++;
+            return true;
+        } else {
+            System.out.println("You can not move into check!");
+            return false;
+        }
 //        board.setEligibleEnPassant(null);
 //        if (isKingThreatened(board, p2, board.getTurn().get())) {
 //            System.out.println("!in check!");
 //        }
-//
-        return capture;
-//        return null;
     }
 
     @Override

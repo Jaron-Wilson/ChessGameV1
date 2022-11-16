@@ -2,8 +2,10 @@ package io.github.jron.chess.common;
 
 import io.github.jron.chess.common.piece.Color;
 import io.github.jron.chess.common.piece.Piece;
+import io.github.jron.chess.common.piece.Queen;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -14,6 +16,16 @@ public class StandardBoard implements Board {
     private final Incrementer<Color> incrementer;
 
     private Position eligibleEnPassant;
+
+    public StandardBoard(StandardBoard board){
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                this.board[x][y] = board.board[x][y];
+            }
+        }
+
+        this.incrementer = new Incrementer<>(board.incrementer);
+    }
 
     public StandardBoard() {
         this.incrementer = new Incrementer<>(Color.WHITE, Color.BLACK);
@@ -66,8 +78,12 @@ public class StandardBoard implements Board {
             for (int y = 0; y < height; y++) {
                 if (board[x][y] != null) {
                     Piece p = board[x][y];
+                    if( p instanceof Queen ){
+                        System.out.println("Stink");
+                    }
                     if( !p.getColor().equals(color)){
-                        positions.addAll(p.getThreatenedPositions(this, new Position(x,y)));
+                        List<Position> threatened = p.getThreatenedPositions(this, new Position(x,y));
+                        positions.addAll(threatened);
                     }
                 }
             }

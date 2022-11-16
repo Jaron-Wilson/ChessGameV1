@@ -133,14 +133,15 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece move(StandardBoard board, Position p1, Position p2) {
+    public boolean move(StandardBoard board, Position p1, Position p2) {
 
         Piece enPassantCapture = null;
         if( p2.equals(board.getEligibleEnPassant())){
             enPassantCapture = board.removePiece(p2.getX(), p1.getY());
         }
 
-        Piece capture = super.move(board, p1, p2);
+        Piece capture = board.getPiece(p2);
+        boolean success = super.move(board, p1, p2);
         if( enPassantCapture != null) capture = enPassantCapture;
 
 
@@ -162,7 +163,7 @@ public class Pawn extends Piece {
             }
         }
 
-        return capture;
+        return success;
     }
 
     @Override

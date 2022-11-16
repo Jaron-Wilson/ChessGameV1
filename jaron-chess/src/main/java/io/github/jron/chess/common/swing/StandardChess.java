@@ -41,13 +41,15 @@ public class StandardChess implements MoveListener {
 
         if (selectedPiece != null && selectedPiece.getColor() == board.getTurn().get()) {
             if (canMoveToList != null && canMoveToList.contains(coordanate)) {
-                Piece captured = selectedPiece.move(board,selectedPosition, coordanate);
-                if (selectedPiece instanceof Pawn && (coordanate.getY() == 0 || coordanate.getY() == 7)) {
-                  Piece promoted = promote(selectedPiece);
-                  board.setPiece(coordanate, promoted);
+                boolean success = selectedPiece.move(board,selectedPosition, coordanate);
+                if( success ) {
+                    if (selectedPiece instanceof Pawn && (coordanate.getY() == 0 || coordanate.getY() == 7)) {
+                        Piece promoted = promote(selectedPiece);
+                        board.setPiece(coordanate, promoted);
+                    }
+                    board.getTurn().increment();
+                    setStateOfTheGame(null, null, null);
                 }
-                board.getTurn().increment();
-                setStateOfTheGame(null, null, null);
                 return;
             } else {
                 System.out.println("MORON!");

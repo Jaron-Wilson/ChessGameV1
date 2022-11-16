@@ -30,6 +30,7 @@ public class King extends Piece {
             }
         }
 
+//        Castle
         int x = current.getX(), y = current.getY();
         int numberOfEmptySpacesLeft = 0, numberOfEmptySpacesRight = 0;
         for(int left=x-1, right=x+1; left>=0||right<8; left--, right++){
@@ -54,6 +55,7 @@ public class King extends Piece {
                 addIfEmptyAndMoreThanThat(moves, board, x+2, y);
             }
         }
+//        End of castling
 
         return moves;
     }
@@ -79,9 +81,10 @@ public class King extends Piece {
         isCanCastleQueenSide = canCastleQueenSide;
     }
 
-    public Piece move(StandardBoard board, Position oldPosition, Position newPosition) {
+    public boolean move(StandardBoard board, Position oldPosition, Position newPosition) {
         canCastleKingSide = isCanCastleQueenSide = false;
-        Piece captured = super.move(board, oldPosition, newPosition);
+        board.getPiece(newPosition);
+        boolean success = super.move(board, oldPosition, newPosition);
 
         if ( oldPosition.getX() - newPosition.getX() == 2 ) {
             Piece rook = board.removePiece(0, newPosition.getY());
@@ -92,7 +95,7 @@ public class King extends Piece {
             board.setPiece( newPosition.getX()-1, newPosition.getY(), rook);
         }
 
-        return captured;
+        return success;
     }
 
 }

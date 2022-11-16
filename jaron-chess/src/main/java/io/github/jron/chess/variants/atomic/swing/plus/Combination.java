@@ -1,4 +1,4 @@
-package io.github.jron.chess.variants.plus;
+package io.github.jron.chess.variants.atomic.swing.plus;
 
 import io.github.jron.chess.common.Board;
 import io.github.jron.chess.common.Position;

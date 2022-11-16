@@ -1,8 +1,8 @@
-package io.github.jron.chess.variants.plus.swing;
+package io.github.jron.chess.variants.atomic.swing.plus.swing;
 
 import io.github.jron.chess.common.piece.Piece;
 import io.github.jron.chess.common.swing.StandardImageFactory;
-import io.github.jron.chess.variants.plus.Combination;
+import io.github.jron.chess.variants.atomic.swing.plus.Combination;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;

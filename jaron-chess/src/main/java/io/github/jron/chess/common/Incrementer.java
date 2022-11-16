@@ -12,6 +12,11 @@ public class Incrementer<O> {
     private final O[] objects;
     private int i = 0;
 
+    public Incrementer(Incrementer<O> parent){
+        this.length = parent.length;
+        this.objects = parent.objects;
+        i = parent.i;
+    }
     public Incrementer(O... o) {
         this.objects = o;
         this.length = o.length;
